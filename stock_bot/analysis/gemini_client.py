@@ -1,6 +1,8 @@
-"""串接 Google Gemini API，將台股資料摘要成一段盤勢分析文字。"""
+"""串接 Google Gemini API：彙整財經新聞摘要，並挑選短中長線潛力股。"""
 
 from __future__ import annotations
+
+import json
 
 from google import genai
 
@@ -9,35 +11,78 @@ from stock_bot.fetchers.twse import IndexQuote
 
 SYSTEM_INSTRUCTION = (
     "你是一位專業的台股盤勢分析師，擅長用簡潔易懂的繁體中文，"
-    "為忙碌的投資人撰寫每日晨報。語氣專業、客觀，避免過度誇大或提供明確買賣建議。"
+    "為忙碌的投資人撰寫每日晨報並挑選潛力股。語氣專業、客觀，"
+    "避免過度誇大或保證獲利的言論，所有進場區間與防守價格僅供參考，不構成投資建議。"
 )
 
+_STOCK_PICK_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "ticker": {"type": "string", "description": "股票代號，例如 2330"},
+        "name": {"type": "string", "description": "股票名稱"},
+        "entry_range": {"type": "string", "description": "建議進場價格區間，例如 950-960"},
+        "stop_loss": {"type": "string", "description": "建議防守價格（跌破應停損）"},
+        "reason": {"type": "string", "description": "選股理由，30 字以內"},
+    },
+    "required": ["ticker", "name", "entry_range", "stop_loss", "reason"],
+}
 
-def build_prompt(
-    index: IndexQuote,
-    sectors: list[IndexQuote],
-    news: list[NewsItem],
-) -> str:
+RESPONSE_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "news_summary": {"type": "string", "description": "財經新聞重點摘要，150 字以內"},
+        "news_conclusion": {"type": "string", "description": "新聞總結與風險提醒，100 字以內"},
+        "stock_picks": {
+            "type": "object",
+            "properties": {
+                "short_term": {
+                    "type": "array",
+                    "items": _STOCK_PICK_SCHEMA,
+                    "minItems": 5,
+                    "maxItems": 5,
+                },
+                "mid_term": {
+                    "type": "array",
+                    "items": _STOCK_PICK_SCHEMA,
+                    "minItems": 5,
+                    "maxItems": 5,
+                },
+                "long_term": {
+                    "type": "array",
+                    "items": _STOCK_PICK_SCHEMA,
+                    "minItems": 5,
+                    "maxItems": 5,
+                },
+            },
+            "required": ["short_term", "mid_term", "long_term"],
+        },
+    },
+    "required": ["news_summary", "news_conclusion", "stock_picks"],
+}
+
+
+def build_prompt(sectors: list[IndexQuote], news: list[NewsItem]) -> str:
     sector_lines = "\n".join(
-        f"- {s.name}：{s.change_sign}{s.change_percent}%（收盤 {s.close}）" for s in sectors
+        f"- {s.name}：{s.change_sign}{s.change_percent}%" for s in sectors
     )
     news_lines = "\n".join(f"- {n.title}（{n.source or '未知來源'}）" for n in news)
 
-    return f"""請根據以下資料，撰寫今日台股晨報摘要，包含三個段落：
-1.「大盤觀察」：解讀加權指數漲跌意涵
-2.「焦點族群」：點出表現最強與最弱的類股，並簡述可能原因
-3.「新聞重點」：統整財經新聞的共同主題或值得留意的風險
+    return f"""請根據以下台股當日資料，完成「新聞分析」與「潛力股推薦」。
 
-請用 3~5 句精簡繁體中文撰寫每個段落，總長度控制在 400 字以內，不要加入任何投資建議或目標價。
-
-【加權指數】
-{index.name}：收盤 {index.close}，{index.change_sign}{index.change_points} 點（{index.change_sign}{index.change_percent}%）
-
-【類股漲跌幅（由高到低）】
+【焦點族群（漲幅前五）】
 {sector_lines}
 
-【相關新聞標題】
+【相關財經新聞標題】
 {news_lines}
+
+請完成：
+1. news_summary：統整上述新聞的重點與共同主題（150 字以內）
+2. news_conclusion：給出今日新聞的總結與值得留意的風險（100 字以內）
+3. stock_picks：根據今日焦點族群與新聞，分別挑選「短線（1-2 週）」「中線（1-3 個月）」
+   「長線（半年以上）」各 5 檔台股潛力股，每檔提供股票代號、名稱、建議進場價格區間、
+   建議防守價格（跌破應停損）、30 字以內選股理由。
+
+不要提供明確目標價或保證獲利的言論，所有建議僅供參考。
 """
 
 
@@ -48,16 +93,15 @@ class GeminiClient:
         self._client = genai.Client(api_key=api_key)
         self._model = model
 
-    def summarize_market(
-        self,
-        index: IndexQuote,
-        sectors: list[IndexQuote],
-        news: list[NewsItem],
-    ) -> str:
-        prompt = build_prompt(index, sectors, news)
+    def analyze_market(self, sectors: list[IndexQuote], news: list[NewsItem]) -> dict:
+        prompt = build_prompt(sectors, news)
         response = self._client.models.generate_content(
             model=self._model,
             contents=prompt,
-            config={"system_instruction": SYSTEM_INSTRUCTION},
+            config={
+                "system_instruction": SYSTEM_INSTRUCTION,
+                "response_mime_type": "application/json",
+                "response_schema": RESPONSE_SCHEMA,
+            },
         )
-        return (response.text or "").strip()
+        return json.loads(response.text)

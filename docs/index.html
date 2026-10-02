@@ -33,34 +33,13 @@
   header.hero {
     background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
     color: #fff;
-    padding: 32px 16px 28px;
+    padding: 24px 16px;
     text-align: center;
-    border-radius: 0 0 24px 24px;
-    margin-bottom: 20px;
+    border-radius: 0 0 20px 20px;
+    margin-bottom: 16px;
   }
-  header.hero .date {
-    font-size: 14px;
-    opacity: 0.85;
-    margin-bottom: 4px;
-  }
-  header.hero h1 {
-    margin: 4px 0 16px;
-    font-size: 22px;
-    font-weight: 700;
-  }
-  .index-value {
-    font-size: 40px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-  }
-  .index-change {
-    font-size: 16px;
-    font-weight: 600;
-    margin-top: 4px;
-  }
-  .index-change.up { color: #ffe3e3; }
-  .index-change.down { color: #d3f9d8; }
-  .index-change.flat { color: #e9ecef; }
+  header.hero .date { font-size: 14px; opacity: 0.85; }
+  header.hero h1 { margin: 4px 0 0; font-size: 20px; font-weight: 700; }
 
   .card {
     background: var(--card-bg);
@@ -77,21 +56,50 @@
     gap: 8px;
   }
   .card h2 .emoji { font-size: 18px; }
-
-  .summary-section { margin-bottom: 14px; }
-  .summary-section:last-child { margin-bottom: 0; }
-  .summary-section h3 {
-    font-size: 14px;
-    color: var(--accent-1);
-    margin: 0 0 6px;
+  .card h3.sub-heading {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 16px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
-  .summary-section p {
-    margin: 0;
-    font-size: 14px;
-    color: var(--text);
-    white-space: pre-line;
+  .card h3.sub-heading:first-of-type { margin-top: 0; }
+
+  /* 指數看板 */
+  .index-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .index-item {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 10px 8px;
+    text-align: center;
+  }
+  .index-item .name {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .index-item .close {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .index-item .pct {
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 2px;
   }
 
+  .up { color: var(--up); }
+  .down { color: var(--down); }
+  .flat { color: var(--flat); }
+
+  /* 焦點族群 */
   .sector-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -108,29 +116,17 @@
     font-size: 12px;
     margin-bottom: 2px;
   }
-  .sector-item .pct {
-    font-weight: 700;
-    font-size: 15px;
-  }
-  .pct.up, .index-value.up, .name-badge.up { color: var(--up); }
-  .pct.down, .index-value.down, .name-badge.down { color: var(--down); }
-  .pct.flat, .index-value.flat, .name-badge.flat { color: var(--flat); }
+  .sector-item .pct { font-weight: 700; font-size: 15px; }
 
-  .news-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+  /* 新聞 */
+  .news-list { list-style: none; margin: 0 0 16px; padding: 0; }
   .news-list li {
     padding: 10px 0;
     border-bottom: 1px solid #f0f0f0;
     font-size: 14px;
   }
   .news-list li:last-child { border-bottom: none; }
-  .news-list a {
-    color: var(--text);
-    text-decoration: none;
-  }
+  .news-list a { color: var(--text); text-decoration: none; }
   .news-list a:hover { color: var(--accent-1); }
   .news-source {
     display: block;
@@ -138,6 +134,44 @@
     color: var(--muted);
     margin-top: 2px;
   }
+  .ai-block { border-top: 2px dashed #eee; padding-top: 14px; }
+  .ai-block h3 {
+    font-size: 13px;
+    color: var(--accent-1);
+    margin: 0 0 6px;
+  }
+  .ai-block p {
+    margin: 0 0 14px;
+    font-size: 14px;
+    white-space: pre-line;
+  }
+  .ai-block p:last-child { margin-bottom: 0; }
+
+  /* 潛力股 */
+  .stock-list { display: flex; flex-direction: column; gap: 8px; }
+  .stock-item {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  .stock-item .stock-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+  .stock-item .stock-name { font-weight: 700; font-size: 14px; }
+  .stock-item .stock-ticker { color: var(--muted); font-size: 12px; margin-left: 4px; }
+  .stock-item .price-row {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .stock-item .price-row b { color: var(--text); }
+  .stock-item .reason { font-size: 12.5px; color: var(--text); }
 
   footer {
     text-align: center;
@@ -145,37 +179,66 @@
     color: var(--muted);
     padding: 16px 0 0;
   }
-  footer .disclaimer {
-    margin-top: 6px;
-  }
+  footer .disclaimer { margin-top: 6px; }
 </style>
 </head>
 <body>
   <div class="container">
     <header class="hero">
-      <div class="date">2026-10-01 台股晨報</div>
-      <h1>發行量加權股價指數</h1>
-      <div class="index-value up">48353.49</div>
-      <div class="index-change up">
-        +413.36 點
-        （+0.86%）
-      </div>
+      <div class="date">2026-10-01</div>
+      <h1>台股晨報</h1>
     </header>
 
     <div class="card">
-      <h2><span class="emoji">🤖</span> AI 盤勢摘要</h2>
-      <p style="font-size:14px; white-space: pre-line;">**大盤觀察**  
-台股加權指數今日終場大漲 413.36 點，收在 48,353.49 點，續創歷史新高。此波強勁漲勢主要由台積電等權值股領軍，並伴隨新台幣由貶轉升的資金匯入行情，展現第四季「開門紅」的樂觀氣勢。不過，大盤在 48,000 點關卡高檔震盪，短線支撐與關鍵點位的攻防仍待觀察。
-
-**焦點族群**  
-今日電子與科技族群表現最為亮眼，通信網路類股大漲 2.71% 居首，電子通路也強勢跟漲。這反映市場資金持續重回科技與電子成長板塊。相對地，傳產族群表現較為疲軟，油電燃氣類股重挫 2.89% 墊底，玻璃與水泥等原物料類股也因資金排擠效應集體收黑。
-
-**新聞重點**  
-新聞多聚焦於台股今年累計漲幅冠居亞股、躍升全球強勢市場的榮景，法人對第四季旺季效應多持積極態度。然而，媒體也示警大盤高檔可能面臨「虛胖」及節後變盤的震盪風險，提醒投資人留意追高套牢的可能性。在多空僵局下，低位階個股與高息 ETF 的後續資金流向值得密切關注。</p>
+      <h2><span class="emoji">📊</span> 大盤指數</h2>
+      <h3 class="sub-heading">美股</h3>
+      <div class="index-grid">
+        
+        <div class="index-item">
+          <div class="name">道瓊工業指數</div>
+          <div class="close down">51089.41</div>
+          <div class="pct down">-0.32%</div>
+        </div>
+        
+        <div class="index-item">
+          <div class="name">S&P 500</div>
+          <div class="close down">7723.99</div>
+          <div class="pct down">-0.75%</div>
+        </div>
+        
+        <div class="index-item">
+          <div class="name">那斯達克綜合指數</div>
+          <div class="close up">27217.64</div>
+          <div class="pct up">+1.29%</div>
+        </div>
+        
+      </div>
+      <h3 class="sub-heading">台股</h3>
+      <div class="index-grid">
+        
+        <div class="index-item">
+          <div class="name">發行量加權股價指數</div>
+          <div class="close up">48353.49</div>
+          <div class="pct up">+0.86%</div>
+        </div>
+        
+        <div class="index-item">
+          <div class="name">臺灣50指數</div>
+          <div class="close up">45041.66</div>
+          <div class="pct up">+1.08%</div>
+        </div>
+        
+        <div class="index-item">
+          <div class="name">臺灣高股息指數</div>
+          <div class="close up">16177.75</div>
+          <div class="pct up">+0.09%</div>
+        </div>
+        
+      </div>
     </div>
 
     <div class="card">
-      <h2><span class="emoji">🔥</span> 焦點族群</h2>
+      <h2><span class="emoji">🔥</span> 焦點族群 Top 5</h2>
       <div class="sector-grid">
         
         <div class="sector-item">
@@ -201,166 +264,6 @@
         <div class="sector-item">
           <div class="name">機電類指數</div>
           <div class="pct up">+1.23%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">綠能環保類指數</div>
-          <div class="pct up">+1.21%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">半導體類指數</div>
-          <div class="pct up">+1.15%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">電腦及週邊設備類指數</div>
-          <div class="pct up">+1.15%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">汽車類指數</div>
-          <div class="pct up">+0.45%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">光電類指數</div>
-          <div class="pct up">+0.35%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">其他電子類指數</div>
-          <div class="pct up">+0.28%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">電機機械類指數</div>
-          <div class="pct up">+0.18%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">其他類指數</div>
-          <div class="pct up">+0.12%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">觀光餐旅類指數</div>
-          <div class="pct up">+0.08%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">電器電纜類指數</div>
-          <div class="pct up">+0.05%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">資訊服務類指數</div>
-          <div class="pct up">+0.02%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">化學類指數</div>
-          <div class="pct down">--0.03%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">食品類指數</div>
-          <div class="pct down">--0.20%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">建材營造類指數</div>
-          <div class="pct down">--0.20%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">貿易百貨類指數</div>
-          <div class="pct down">--0.27%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">運動休閒類指數</div>
-          <div class="pct down">--0.29%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">橡膠類指數</div>
-          <div class="pct down">--0.40%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">數位雲端類指數</div>
-          <div class="pct down">--0.45%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">鋼鐵類指數</div>
-          <div class="pct down">--0.66%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">航運類指數</div>
-          <div class="pct down">--0.75%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">居家生活類指數</div>
-          <div class="pct down">--0.79%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">金融保險類指數</div>
-          <div class="pct down">--0.84%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">紡織纖維類指數</div>
-          <div class="pct down">--0.85%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">塑膠化工類指數</div>
-          <div class="pct down">--1.07%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">化學生技醫療類指數</div>
-          <div class="pct down">--1.08%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">塑膠類指數</div>
-          <div class="pct down">--1.11%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">造紙類指數</div>
-          <div class="pct down">--1.36%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">生技醫療類指數</div>
-          <div class="pct down">--1.54%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">水泥類指數</div>
-          <div class="pct down">--1.66%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">水泥窯製類指數</div>
-          <div class="pct down">--1.74%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">玻璃陶瓷類指數</div>
-          <div class="pct down">--1.89%</div>
-        </div>
-        
-        <div class="sector-item">
-          <div class="name">油電燃氣類指數</div>
-          <div class="pct down">--2.89%</div>
         </div>
         
       </div>
@@ -401,13 +304,13 @@
         </li>
         
         <li>
-          <a href="https://news.google.com/rss/articles/CBMihgFBVV95cUxPaUJlS1RnbXNGSTFsWUxsWVlfUHQ0LWM2cjdQa3NjUnFhYkdhNkNfbkJ5aTY3TnBuTlFFY3d6NzRwV1FrYnBoSG9Yd2hnQ1JPZEpCeHdPdHV0eEJjMWFFWjBhZzV0YlRJRmVrMmdpVHdiai01VGlNeGFndzU1UGVROGwwU0tQUQ?oc=5" target="_blank" rel="noopener">8檔台股高息ETF 9月含息績效打敗大盤- 財經新聞 - PChome Online 新聞</a>
-          <span class="news-source">PChome Online 新聞</span>
+          <a href="https://news.google.com/rss/articles/CBMiT0FVX3lxTE5lWC1ZRTR1cDVJMnM3RnN1V2RfU1VLSUZyeElUeGZYS2JMbzhYVWEwaEtMUmp5a2pOZmVEVzllSEJKU01ONHNvYkpSeGdiaTQ?oc=5" target="_blank" rel="noopener">狠甩韓國！台股今年狂飆67%成「最強市場」 市值全球第4 - TVBS新聞網</a>
+          <span class="news-source">TVBS新聞網</span>
         </li>
         
         <li>
-          <a href="https://news.google.com/rss/articles/CBMiT0FVX3lxTE5lWC1ZRTR1cDVJMnM3RnN1V2RfU1VLSUZyeElUeGZYS2JMbzhYVWEwaEtMUmp5a2pOZmVEVzllSEJKU01ONHNvYkpSeGdiaTQ?oc=5" target="_blank" rel="noopener">狠甩韓國！台股今年狂飆67%成「最強市場」 市值全球第4 - TVBS新聞網</a>
-          <span class="news-source">TVBS新聞網</span>
+          <a href="https://news.google.com/rss/articles/CBMigwJBVV95cUxNX0VodGdzcTRiRnVwdHhvdTlqQ0RPODZTZFJ0ODdtRVVpU1FGeEhHNHZ1cV9HY01nMjlmclBlSlZsamZsejlqd2tudU1icENWZkItcnBpZjc2cXNsSkxkTXI5NFlaZi1oa2p1TGZvbzJNUUtkQmc5QkVPSFpkdmsxX0d5V0ZiN1lnRjFkVGVmbmRSR1B1bjlVTjVYb2xTb2hvdTh4SVpwUGtKSmZYZjlGU1NoeTBYYXJ4cWI1WnBsSDZyODluc1RPZjJaaHdwUE5qanQzTWRvNmFfaEZ5ZFYwVkFxbVhCYjZYR0F0cXpjS00yNm5RR3ZNYjJ4alF4cTlQSHNv?oc=5" target="_blank" rel="noopener">8檔台股高息ETF 9月含息績效打敗大盤 - Yahoo新聞</a>
+          <span class="news-source">Yahoo新聞</span>
         </li>
         
         <li>
@@ -421,11 +324,201 @@
         </li>
         
       </ul>
+      <div class="ai-block">
+        <h3>🤖 新聞摘要</h3>
+        <p>台股第四季迎來開門紅，在台積電領軍及台幣轉升下，大盤突破4萬8千點大關，今年累計漲幅稱冠亞股，吸引法人看好第四季行情。高股息及半導體ETF表現亮眼，惟市場仍有部分「虛胖」變盤與多空僵局的警訊，投資人須留意高檔震盪。</p>
+        <h3>總結</h3>
+        <p>台股創高奠定多頭格局，然高檔震盪加劇，須慎防「虛胖」拉積盤與節後變盤風險。操作上建議避開高估值個股，分批佈局業績題材股與低位階電子股。</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="emoji">🎯</span> 潛力股精選</h2>
+      <h3 class="sub-heading">短線（1-2 週）</h3>
+      <div class="stock-list">
+        
+        <div class="stock-item">
+          <div class="stock-head">
+            <span><span class="stock-name">台灣大</span><span class="stock-ticker">3045</span></span>
+          </div>
+          <div class="price-row">
+            <span>進場區間：<b>110-112</b></span>
+            <span>防守價：<b>105</b></span>
+          </div>
+          <div class="reason">通信網路指數領漲，營收穩健且具備技術面轉強契機。</div>
+        </div>
+        
+        <div class="stock-item">
+          <div class="stock-head">
+            <span><span class="stock-name">聯詠</span><span class="stock-ticker">3034</span></span>
+          </div>
+          <div class="price-row">
+            <span>進場區間：<b>490-500</b></span>
+            <span>防守價：<b>470</b></span>
+          </div>
+          <div class="reason">驅動IC需求回溫，股價位階相對低，具短線反彈動能。</div>
+        </div>
+        
+        <div class="stock-item">
+          <div class="stock-head">
+            <span><span class="stock-name">大聯大</span><span class="stock-ticker">3702</span></span>
+          </div>
+          <div class="price-row">
+            <span>進場區間：<b>75-77</b></span>
+            <span>防守價：<b>72</b></span>
+          </div>
+          <div class="reason">電子通路龍頭，受惠半導體需求回溫，短線量能放大。</div>
+        </div>
+        
+        <div class="stock-item">
+          <div class="stock-head">
+            <span><span class="stock-name">台達電</span><span class="stock-ticker">2308</span></span>
+          </div>
+          <div class="price-row">
+            <span>進場區間：<b>380-390</b></span>
+            <span>防守價：<b>360</b></span>
+          </div>
+          <div class="reason">電子零組件與散熱需求旺，短線技術指標黃金交叉。</div>
+        </div>
+        
+        <div class="stock-item">
+          <div class="stock-head">
+            <span><span class="stock-name">士電</span><span class="stock-ticker">1503</span></span>
+          </div>
+          <div class="price-row">
+            <span>進場區間：<b>215-220</b></span>
+            <span>防守價：<b>200</b></span>
+          </div>
+          <div class="reason">重電政策利多持續，整理後帶量上攻，短線具備爆發力。</div>
+        </div>
+        
+      </div>
+      <h3 class="sub-heading">中線（1-3 個月）</h3>
+      <div class="stock-list">
+        
+        <div class="stock-item">
+          <div class="stock-head">
+            <span><span class="stock-name">台積電</span><span class="stock-ticker">2330</span></span>
+          </div>
+          <div class="price-row">
+            <span>進場區間：<b>960-980</b></span>
+            <span>防守價：<b>910</b></span>
+          </div>
+          <div class="reason">權值龍頭法說展望樂觀，先進製程訂單滿載，中線多頭不變。</div>
+        </div>
+        
+        <div class="stock-item">
+          <div class="stock-head">
+            <span><span class="stock-name">鴻海</span><span class="stock-ticker">2317</span></span>
+          </div>
+          <div class="price-row">
+            <span>進場區間：<b>175-180</b></span>
+            <span>防守價：<b>165</b></span>
+          </div>
+          <div class="reason">AI伺服器出貨放量，第四季營運看旺，中線偏多佈局。</div>
+        </div>
+        
+        <div class="stock-item">
+          <div class="stock-head">
+            <span><span class="stock-name">欣興</span><span class="stock-ticker">3037</span></span>
+          </div>
+          <div class="price-row">
+            <span>進場區間：<b>135-140</b></span>
+            <span>防守價：<b>125</b></span>
+          </div>
+          <div class="reason">載板需求復甦，低位階兼具AI題材，中線具波段空間。</div>
+        </div>
+        
+        <div class="stock-item">
+          <div class="stock-head">
+            <span><span class="stock-name">遠傳</span><span class="stock-ticker">4904</span></span>
+          </div>
+          <div class="price-row">
+            <span>進場區間：<b>85-87</b></span>
+            <span>防守價：<b>81</b></span>
+          </div>
+          <div class="reason">合併效應顯現，ARPU持續提升，兼具防禦與成長性。</div>
+        </div>
+        
+        <div class="stock-item">
+          <div class="stock-head">
+            <span><span class="stock-name">中興電</span><span class="stock-ticker">1513</span></span>
+          </div>
+          <div class="price-row">
+            <span>進場區間：<b>165-170</b></span>
+            <span>防守價：<b>155</b></span>
+          </div>
+          <div class="reason">綠能與電網建設長線訂單無虞，中線隨營收公布緩步墊高。</div>
+        </div>
+        
+      </div>
+      <h3 class="sub-heading">長線（半年以上）</h3>
+      <div class="stock-list">
+        
+        <div class="stock-item">
+          <div class="stock-head">
+            <span><span class="stock-name">廣達</span><span class="stock-ticker">2382</span></span>
+          </div>
+          <div class="price-row">
+            <span>進場區間：<b>245-255</b></span>
+            <span>防守價：<b>230</b></span>
+          </div>
+          <div class="reason">AI伺服器龍頭，出貨動能維持高檔，長線成長趨勢確立。</div>
+        </div>
+        
+        <div class="stock-item">
+          <div class="stock-head">
+            <span><span class="stock-name">大立光</span><span class="stock-ticker">3008</span></span>
+          </div>
+          <div class="price-row">
+            <span>進場區間：<b>2500-2550</b></span>
+            <span>防守價：<b>2350</b></span>
+          </div>
+          <div class="reason">潛望式鏡頭滲透率提升，長線高階鏡頭升級趨勢明確。</div>
+        </div>
+        
+        <div class="stock-item">
+          <div class="stock-head">
+            <span><span class="stock-name">中華電</span><span class="stock-ticker">2412</span></span>
+          </div>
+          <div class="price-row">
+            <span>進場區間：<b>120-123</b></span>
+            <span>防守價：<b>115</b></span>
+          </div>
+          <div class="reason">現金流穩定，防禦屬性佳，長線資產配置與高股息首選。</div>
+        </div>
+        
+        <div class="stock-item">
+          <div class="stock-head">
+            <span><span class="stock-name">信邦</span><span class="stock-ticker">3023</span></span>
+          </div>
+          <div class="price-row">
+            <span>進場區間：<b>280-290</b></span>
+            <span>防守價：<b>260</b></span>
+          </div>
+          <div class="reason">醫療、綠能、車用連接線材市占高，長線獲利能力強。</div>
+        </div>
+        
+        <div class="stock-item">
+          <div class="stock-head">
+            <span><span class="stock-name">聯強</span><span class="stock-ticker">2347</span></span>
+          </div>
+          <div class="price-row">
+            <span>進場區間：<b>70-73</b></span>
+            <span>防守價：<b>66</b></span>
+          </div>
+          <div class="reason">全球通路佈局完善，高股息且營收穩健，長線存股優選。</div>
+        </div>
+        
+      </div>
     </div>
 
     <footer>
-      <div>產生時間：2026-10-02 15:34</div>
-      <div class="disclaimer">本頁內容由 Gemini AI 自動彙整，僅供參考，不構成投資建議。</div>
+      <div>產生時間：2026-10-03 00:16</div>
+      <div class="disclaimer">
+        本頁內容（含新聞摘要、焦點族群與潛力股推薦）皆由 Gemini AI 自動產生，僅供參考，
+        不構成任何投資建議，進場與停損價位請自行審慎評估風險。
+      </div>
     </footer>
   </div>
 </body>

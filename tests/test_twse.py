@@ -105,3 +105,21 @@ def test_fetch_weighted_index_missing_raises(mock_get):
         assert False, "應該要拋出 ValueError"
     except ValueError:
         pass
+
+
+@patch("stock_bot.fetchers.twse.requests.get")
+def test_fetch_named_indices_preserves_requested_order(mock_get):
+    mock_get.return_value = _mock_response()
+
+    quotes = twse.fetch_named_indices(["航運類指數", "發行量加權股價指數"])
+
+    assert [q.name for q in quotes] == ["航運類指數", "發行量加權股價指數"]
+
+
+@patch("stock_bot.fetchers.twse.requests.get")
+def test_fetch_named_indices_skips_unknown_names(mock_get):
+    mock_get.return_value = _mock_response()
+
+    quotes = twse.fetch_named_indices(["發行量加權股價指數", "不存在的指數"])
+
+    assert [q.name for q in quotes] == ["發行量加權股價指數"]

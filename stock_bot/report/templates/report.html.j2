@@ -33,34 +33,13 @@
   header.hero {
     background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
     color: #fff;
-    padding: 32px 16px 28px;
+    padding: 24px 16px;
     text-align: center;
-    border-radius: 0 0 24px 24px;
-    margin-bottom: 20px;
+    border-radius: 0 0 20px 20px;
+    margin-bottom: 16px;
   }
-  header.hero .date {
-    font-size: 14px;
-    opacity: 0.85;
-    margin-bottom: 4px;
-  }
-  header.hero h1 {
-    margin: 4px 0 16px;
-    font-size: 22px;
-    font-weight: 700;
-  }
-  .index-value {
-    font-size: 40px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-  }
-  .index-change {
-    font-size: 16px;
-    font-weight: 600;
-    margin-top: 4px;
-  }
-  .index-change.up { color: #ffe3e3; }
-  .index-change.down { color: #d3f9d8; }
-  .index-change.flat { color: #e9ecef; }
+  header.hero .date { font-size: 14px; opacity: 0.85; }
+  header.hero h1 { margin: 4px 0 0; font-size: 20px; font-weight: 700; }
 
   .card {
     background: var(--card-bg);
@@ -77,21 +56,50 @@
     gap: 8px;
   }
   .card h2 .emoji { font-size: 18px; }
-
-  .summary-section { margin-bottom: 14px; }
-  .summary-section:last-child { margin-bottom: 0; }
-  .summary-section h3 {
-    font-size: 14px;
-    color: var(--accent-1);
-    margin: 0 0 6px;
+  .card h3.sub-heading {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 16px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
-  .summary-section p {
-    margin: 0;
-    font-size: 14px;
-    color: var(--text);
-    white-space: pre-line;
+  .card h3.sub-heading:first-of-type { margin-top: 0; }
+
+  /* 指數看板 */
+  .index-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .index-item {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 10px 8px;
+    text-align: center;
+  }
+  .index-item .name {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .index-item .close {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .index-item .pct {
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 2px;
   }
 
+  .up { color: var(--up); }
+  .down { color: var(--down); }
+  .flat { color: var(--flat); }
+
+  /* 焦點族群 */
   .sector-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -108,29 +116,17 @@
     font-size: 12px;
     margin-bottom: 2px;
   }
-  .sector-item .pct {
-    font-weight: 700;
-    font-size: 15px;
-  }
-  .pct.up, .index-value.up, .name-badge.up { color: var(--up); }
-  .pct.down, .index-value.down, .name-badge.down { color: var(--down); }
-  .pct.flat, .index-value.flat, .name-badge.flat { color: var(--flat); }
+  .sector-item .pct { font-weight: 700; font-size: 15px; }
 
-  .news-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+  /* 新聞 */
+  .news-list { list-style: none; margin: 0 0 16px; padding: 0; }
   .news-list li {
     padding: 10px 0;
     border-bottom: 1px solid #f0f0f0;
     font-size: 14px;
   }
   .news-list li:last-child { border-bottom: none; }
-  .news-list a {
-    color: var(--text);
-    text-decoration: none;
-  }
+  .news-list a { color: var(--text); text-decoration: none; }
   .news-list a:hover { color: var(--accent-1); }
   .news-source {
     display: block;
@@ -138,6 +134,44 @@
     color: var(--muted);
     margin-top: 2px;
   }
+  .ai-block { border-top: 2px dashed #eee; padding-top: 14px; }
+  .ai-block h3 {
+    font-size: 13px;
+    color: var(--accent-1);
+    margin: 0 0 6px;
+  }
+  .ai-block p {
+    margin: 0 0 14px;
+    font-size: 14px;
+    white-space: pre-line;
+  }
+  .ai-block p:last-child { margin-bottom: 0; }
+
+  /* 潛力股 */
+  .stock-list { display: flex; flex-direction: column; gap: 8px; }
+  .stock-item {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  .stock-item .stock-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+  .stock-item .stock-name { font-weight: 700; font-size: 14px; }
+  .stock-item .stock-ticker { color: var(--muted); font-size: 12px; margin-left: 4px; }
+  .stock-item .price-row {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .stock-item .price-row b { color: var(--text); }
+  .stock-item .reason { font-size: 12.5px; color: var(--text); }
 
   footer {
     text-align: center;
@@ -145,30 +179,42 @@
     color: var(--muted);
     padding: 16px 0 0;
   }
-  footer .disclaimer {
-    margin-top: 6px;
-  }
+  footer .disclaimer { margin-top: 6px; }
 </style>
 </head>
 <body>
   <div class="container">
     <header class="hero">
-      <div class="date">{{ generated_date }} 台股晨報</div>
-      <h1>{{ index.name }}</h1>
-      <div class="index-value {{ index.trend }}">{{ "%.2f"|format(index.close) }}</div>
-      <div class="index-change {{ index.trend }}">
-        {{ index.change_sign }}{{ "%.2f"|format(index.change_points) }} 點
-        （{{ index.change_sign }}{{ "%.2f"|format(index.change_percent) }}%）
-      </div>
+      <div class="date">{{ generated_date }}</div>
+      <h1>台股晨報</h1>
     </header>
 
     <div class="card">
-      <h2><span class="emoji">🤖</span> AI 盤勢摘要</h2>
-      <p style="font-size:14px; white-space: pre-line;">{{ ai_summary }}</p>
+      <h2><span class="emoji">📊</span> 大盤指數</h2>
+      <h3 class="sub-heading">美股</h3>
+      <div class="index-grid">
+        {% for q in us_indices %}
+        <div class="index-item">
+          <div class="name">{{ q.name }}</div>
+          <div class="close {{ q.trend }}">{{ "%.2f"|format(q.close) }}</div>
+          <div class="pct {{ q.trend }}">{{ q.change_sign }}{{ "%.2f"|format(q.change_percent) }}%</div>
+        </div>
+        {% endfor %}
+      </div>
+      <h3 class="sub-heading">台股</h3>
+      <div class="index-grid">
+        {% for q in tw_indices %}
+        <div class="index-item">
+          <div class="name">{{ q.name }}</div>
+          <div class="close {{ q.trend }}">{{ "%.2f"|format(q.close) }}</div>
+          <div class="pct {{ q.trend }}">{{ q.change_sign }}{{ "%.2f"|format(q.change_percent) }}%</div>
+        </div>
+        {% endfor %}
+      </div>
     </div>
 
     <div class="card">
-      <h2><span class="emoji">🔥</span> 焦點族群</h2>
+      <h2><span class="emoji">🔥</span> 焦點族群 Top 5</h2>
       <div class="sector-grid">
         {% for s in sectors %}
         <div class="sector-item">
@@ -189,11 +235,69 @@
         </li>
         {% endfor %}
       </ul>
+      <div class="ai-block">
+        <h3>🤖 新聞摘要</h3>
+        <p>{{ news_summary }}</p>
+        <h3>總結</h3>
+        <p>{{ news_conclusion }}</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="emoji">🎯</span> 潛力股精選</h2>
+      <h3 class="sub-heading">短線（1-2 週）</h3>
+      <div class="stock-list">
+        {% for pick in stock_picks.short_term %}
+        <div class="stock-item">
+          <div class="stock-head">
+            <span><span class="stock-name">{{ pick.name }}</span><span class="stock-ticker">{{ pick.ticker }}</span></span>
+          </div>
+          <div class="price-row">
+            <span>進場區間：<b>{{ pick.entry_range }}</b></span>
+            <span>防守價：<b>{{ pick.stop_loss }}</b></span>
+          </div>
+          <div class="reason">{{ pick.reason }}</div>
+        </div>
+        {% endfor %}
+      </div>
+      <h3 class="sub-heading">中線（1-3 個月）</h3>
+      <div class="stock-list">
+        {% for pick in stock_picks.mid_term %}
+        <div class="stock-item">
+          <div class="stock-head">
+            <span><span class="stock-name">{{ pick.name }}</span><span class="stock-ticker">{{ pick.ticker }}</span></span>
+          </div>
+          <div class="price-row">
+            <span>進場區間：<b>{{ pick.entry_range }}</b></span>
+            <span>防守價：<b>{{ pick.stop_loss }}</b></span>
+          </div>
+          <div class="reason">{{ pick.reason }}</div>
+        </div>
+        {% endfor %}
+      </div>
+      <h3 class="sub-heading">長線（半年以上）</h3>
+      <div class="stock-list">
+        {% for pick in stock_picks.long_term %}
+        <div class="stock-item">
+          <div class="stock-head">
+            <span><span class="stock-name">{{ pick.name }}</span><span class="stock-ticker">{{ pick.ticker }}</span></span>
+          </div>
+          <div class="price-row">
+            <span>進場區間：<b>{{ pick.entry_range }}</b></span>
+            <span>防守價：<b>{{ pick.stop_loss }}</b></span>
+          </div>
+          <div class="reason">{{ pick.reason }}</div>
+        </div>
+        {% endfor %}
+      </div>
     </div>
 
     <footer>
       <div>產生時間：{{ generated_at }}</div>
-      <div class="disclaimer">本頁內容由 Gemini AI 自動彙整，僅供參考，不構成投資建議。</div>
+      <div class="disclaimer">
+        本頁內容（含新聞摘要、焦點族群與潛力股推薦）皆由 Gemini AI 自動產生，僅供參考，
+        不構成任何投資建議，進場與停損價位請自行審慎評估風險。
+      </div>
     </footer>
   </div>
 </body>

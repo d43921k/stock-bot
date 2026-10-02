@@ -66,6 +66,13 @@ def fetch_weighted_index() -> IndexQuote:
     raise ValueError(f"找不到「{WEIGHTED_INDEX_NAME}」資料，TWSE OpenAPI 格式可能已變更")
 
 
+def fetch_named_indices(names: list[str]) -> list[IndexQuote]:
+    """依指定名稱清單抓取指數，回傳順序與 `names` 一致（找不到的名稱會被略過）。"""
+    rows = _fetch_raw()
+    quotes_by_name = {row["指數"]: _parse_quote(row) for row in rows}
+    return [quotes_by_name[name] for name in names if name in quotes_by_name]
+
+
 def fetch_sector_indices(top_n: int | None = None) -> list[IndexQuote]:
     """抓取各類股指數（焦點族群），依漲跌幅由高到低排序。
 

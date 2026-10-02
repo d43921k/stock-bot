@@ -1,4 +1,4 @@
-"""把台股資料與 AI 摘要組合成一份行動裝置適用的 HTML 晨報。"""
+"""把台股／美股資料、新聞分析與潛力股推薦組合成一份行動裝置適用的 HTML 晨報。"""
 
 from __future__ import annotations
 
@@ -8,12 +8,11 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from stock_bot.fetchers.news import NewsItem
-from stock_bot.fetchers.twse import IndexQuote
 
 TEMPLATE_DIR = Path(__file__).parent / "templates"
 
 
-def _trend(quote: IndexQuote) -> str:
+def _trend(quote) -> str:
     if quote.is_up:
         return "up"
     if quote.is_down:
@@ -21,7 +20,7 @@ def _trend(quote: IndexQuote) -> str:
     return "flat"
 
 
-def _quote_to_dict(quote: IndexQuote) -> dict:
+def _quote_to_dict(quote) -> dict:
     return {
         "name": quote.name,
         "close": quote.close,
@@ -41,10 +40,11 @@ def roc_date_to_iso(roc_date: str) -> str:
 
 
 def render_report_html(
-    index: IndexQuote,
-    sectors: list[IndexQuote],
+    tw_indices: list,
+    us_indices: list,
+    sectors: list,
     news: list[NewsItem],
-    ai_summary: str,
+    analysis: dict,
     generated_at: datetime | None = None,
 ) -> str:
     env = Environment(
@@ -55,24 +55,28 @@ def render_report_html(
     generated_at = generated_at or datetime.now()
 
     return template.render(
-        generated_date=roc_date_to_iso(index.date),
+        generated_date=roc_date_to_iso(tw_indices[0].date),
         generated_at=generated_at.strftime("%Y-%m-%d %H:%M"),
-        index=_quote_to_dict(index),
+        tw_indices=[_quote_to_dict(q) for q in tw_indices],
+        us_indices=[_quote_to_dict(q) for q in us_indices],
         sectors=[_quote_to_dict(s) for s in sectors],
         news=news,
-        ai_summary=ai_summary,
+        news_summary=analysis["news_summary"],
+        news_conclusion=analysis["news_conclusion"],
+        stock_picks=analysis["stock_picks"],
     )
 
 
 def generate_report(
-    index: IndexQuote,
-    sectors: list[IndexQuote],
+    tw_indices: list,
+    us_indices: list,
+    sectors: list,
     news: list[NewsItem],
-    ai_summary: str,
+    analysis: dict,
     output_path: str,
     generated_at: datetime | None = None,
 ) -> Path:
-    html = render_report_html(index, sectors, news, ai_summary, generated_at)
+    html = render_report_html(tw_indices, us_indices, sectors, news, analysis, generated_at)
     path = Path(output_path)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(html, encoding="utf-8")

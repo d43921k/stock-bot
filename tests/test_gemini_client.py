@@ -6,14 +6,6 @@ from stock_bot.analysis.gemini_client import GeminiClient, build_prompt
 from stock_bot.fetchers.news import NewsItem
 from stock_bot.fetchers.twse import IndexQuote
 
-INDEX = IndexQuote(
-    name="發行量加權股價指數",
-    date="1151001",
-    close=48353.49,
-    change_sign="+",
-    change_points=413.36,
-    change_percent=0.86,
-)
 SECTORS = [
     IndexQuote(
         name="半導體類指數",
@@ -33,31 +25,43 @@ NEWS = [
     ),
 ]
 
+FAKE_ANALYSIS = {
+    "news_summary": "新聞摘要測試內容",
+    "news_conclusion": "新聞總結測試內容",
+    "stock_picks": {
+        "short_term": [{"ticker": "2330", "name": "台積電", "entry_range": "950-960", "stop_loss": "930", "reason": "測試理由"}],
+        "mid_term": [],
+        "long_term": [],
+    },
+}
+
 
 def test_build_prompt_includes_key_data():
-    prompt = build_prompt(INDEX, SECTORS, NEWS)
+    prompt = build_prompt(SECTORS, NEWS)
 
-    assert "發行量加權股價指數" in prompt
     assert "半導體類指數" in prompt
     assert "台股大漲創新高" in prompt
 
 
 def test_gemini_client_requires_api_key():
     with pytest.raises(ValueError):
-        GeminiClient(api_key="", model="gemini-2.5-flash")
+        GeminiClient(api_key="", model="gemini-3.5-flash")
 
 
 @patch("stock_bot.analysis.gemini_client.genai.Client")
-def test_summarize_market_calls_generate_content(mock_client_cls):
+def test_analyze_market_calls_generate_content_with_schema(mock_client_cls):
+    import json
+
     mock_client = MagicMock()
-    mock_client.models.generate_content.return_value = MagicMock(text="  摘要內容  ")
+    mock_client.models.generate_content.return_value = MagicMock(text=json.dumps(FAKE_ANALYSIS))
     mock_client_cls.return_value = mock_client
 
-    client = GeminiClient(api_key="fake-key", model="gemini-2.5-flash")
-    result = client.summarize_market(INDEX, SECTORS, NEWS)
+    client = GeminiClient(api_key="fake-key", model="gemini-3.5-flash")
+    result = client.analyze_market(SECTORS, NEWS)
 
-    assert result == "摘要內容"
+    assert result == FAKE_ANALYSIS
     mock_client.models.generate_content.assert_called_once()
     _, kwargs = mock_client.models.generate_content.call_args
-    assert kwargs["model"] == "gemini-2.5-flash"
-    assert "發行量加權股價指數" in kwargs["contents"]
+    assert kwargs["model"] == "gemini-3.5-flash"
+    assert kwargs["config"]["response_mime_type"] == "application/json"
+    assert "半導體類指數" in kwargs["contents"]
