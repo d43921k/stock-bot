@@ -1,0 +1,44 @@
+name: Daily Stock Report
+
+on:
+  schedule:
+    # 每個交易日週一至週五 15:00 台灣時間（UTC+8）執行，即收盤（13:30）後約 1.5 小時，
+    # 讓 TWSE 當日收盤資料穩定後再抓取。cron 以 UTC 表示：07:00 UTC = 15:00 台灣時間。
+    - cron: "0 7 * * 1-5"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-stock-report
+  cancel-in-progress: false
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate morning report
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python -m stock_bot.main
+
+      - name: Commit and push updated report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/index.html
+          git diff --staged --quiet && echo "No changes to commit" && exit 0
+          git commit -m "chore: update daily stock report ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+          git push
