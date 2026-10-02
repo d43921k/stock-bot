@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>台股晨報 2026-10-01</title>
+<style>
+  :root {
+    --up: #e5484d;
+    --down: #2f9e44;
+    --flat: #868e96;
+    --bg: #f4f5f7;
+    --card-bg: #ffffff;
+    --text: #1a1a1a;
+    --muted: #6b7280;
+    --accent-1: #4f46e5;
+    --accent-2: #0ea5e9;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC",
+      "Microsoft JhengHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 16px 48px;
+  }
+  header.hero {
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    color: #fff;
+    padding: 32px 16px 28px;
+    text-align: center;
+    border-radius: 0 0 24px 24px;
+    margin-bottom: 20px;
+  }
+  header.hero .date {
+    font-size: 14px;
+    opacity: 0.85;
+    margin-bottom: 4px;
+  }
+  header.hero h1 {
+    margin: 4px 0 16px;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .index-value {
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+  }
+  .index-change {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .index-change.up { color: #ffe3e3; }
+  .index-change.down { color: #d3f9d8; }
+  .index-change.flat { color: #e9ecef; }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .card h2 {
+    font-size: 16px;
+    margin: 0 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card h2 .emoji { font-size: 18px; }
+
+  .summary-section { margin-bottom: 14px; }
+  .summary-section:last-child { margin-bottom: 0; }
+  .summary-section h3 {
+    font-size: 14px;
+    color: var(--accent-1);
+    margin: 0 0 6px;
+  }
+  .summary-section p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text);
+    white-space: pre-line;
+  }
+
+  .sector-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .sector-item {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  .sector-item .name {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+  .sector-item .pct {
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .pct.up, .index-value.up, .name-badge.up { color: var(--up); }
+  .pct.down, .index-value.down, .name-badge.down { color: var(--down); }
+  .pct.flat, .index-value.flat, .name-badge.flat { color: var(--flat); }
+
+  .news-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .news-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+  }
+  .news-list li:last-child { border-bottom: none; }
+  .news-list a {
+    color: var(--text);
+    text-decoration: none;
+  }
+  .news-list a:hover { color: var(--accent-1); }
+  .news-source {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  footer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    padding: 16px 0 0;
+  }
+  footer .disclaimer {
+    margin-top: 6px;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <div class="date">2026-10-01 台股晨報</div>
+      <h1>發行量加權股價指數</h1>
+      <div class="index-value up">48353.49</div>
+      <div class="index-change up">
+        +413.36 點
+        （+0.86%）
+      </div>
+    </header>
+
+    <div class="card">
+      <h2><span class="emoji">🤖</span> AI 盤勢摘要</h2>
+      <p style="font-size:14px; white-space: pre-line;">【大盤觀察】這是尚未串接 Gemini API 的預覽摘要，實際上線後將由 AI 依今日盤勢自動生成。
+
+【焦點族群】目前以範例資料展示排版效果。
+
+【新聞重點】此區塊將彙整當日財經新聞重點。</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="emoji">🔥</span> 焦點族群</h2>
+      <div class="sector-grid">
+        
+        <div class="sector-item">
+          <div class="name">通信網路類指數</div>
+          <div class="pct up">+2.71%</div>
+        </div>
+        
+        <div class="sector-item">
+          <div class="name">電子通路類指數</div>
+          <div class="pct up">+2.19%</div>
+        </div>
+        
+        <div class="sector-item">
+          <div class="name">電子零組件類指數</div>
+          <div class="pct up">+1.90%</div>
+        </div>
+        
+        <div class="sector-item">
+          <div class="name">電子工業類指數</div>
+          <div class="pct up">+1.24%</div>
+        </div>
+        
+        <div class="sector-item">
+          <div class="name">機電類指數</div>
+          <div class="pct up">+1.23%</div>
+        </div>
+        
+        <div class="sector-item">
+          <div class="name">生技醫療類指數</div>
+          <div class="pct down">--1.54%</div>
+        </div>
+        
+        <div class="sector-item">
+          <div class="name">水泥類指數</div>
+          <div class="pct down">--1.66%</div>
+        </div>
+        
+        <div class="sector-item">
+          <div class="name">水泥窯製類指數</div>
+          <div class="pct down">--1.74%</div>
+        </div>
+        
+        <div class="sector-item">
+          <div class="name">玻璃陶瓷類指數</div>
+          <div class="pct down">--1.89%</div>
+        </div>
+        
+        <div class="sector-item">
+          <div class="name">油電燃氣類指數</div>
+          <div class="pct down">--2.89%</div>
+        </div>
+        
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="emoji">📰</span> 財經新聞</h2>
+      <ul class="news-list">
+        
+        <li>
+          <a href="https://news.google.com/rss/articles/CBMiT0FVX3lxTFBjZFJIV3hQZ2dkaWJHaHU3ejNEdndteHByeDFJZWtyaGhzRWtOcDRkb2Nncm1pRF9RWFRtQ1ZBQ2VlOEo0cnZSZS1URzFHRFk?oc=5" target="_blank" rel="noopener">大盤「虛胖」爆警訊！節後變盤只是開端？多空僵局下，小心淪為最後接盤俠！ - news.cnyes.com</a>
+          <span class="news-source">news.cnyes.com</span>
+        </li>
+        
+        <li>
+          <a href="https://news.google.com/rss/articles/CBMi_AJBVV95cUxQMHdvY2VUT0ltTWFUM3B1OGpudlVnS3h4VWNRaElkV1ZKT2JyeEoxam1qWkhDR2hZRDR3OTNFVjhDU0dqeVFLX1ZsUFRodkk2X2dDZU91TXVvZVVDTVVZNFF2V1RFV2s2dDcyMzBaV2NxcEhWOFZxdkNGYXllVUN5cHZIRXkySWZYQzh3V215UjFYa1pReTlSZHBROEpyOExqcEplNFNCMkc5cHA3aHpaSHFhRGdoX1RGVlZCaXM5Q2xUd0lRWkt0TmRIYzlaSlI4TXBmb0hNRUFlSkNTcWRtUDVpVUpZY045d0dYYmtGd082NGhsak9DOGowTjdTcXY4VERjMnJSS00xdThiQzBINWp3NmlOYXVvZGlWdDJKUjFvS1gzRm5UX3dJcjdnZkxjVWt6NjBGWFE3dVlodkE5M2VnQV8zLVpMX1dtM2ZVN2hyNWVoNE5pNmZiMmRrNUZlajlpLU84OVE4WndXRnNSdm1vb2pvcXNsOGVVVg?oc=5" target="_blank" rel="noopener">台股衝破48K再創高！郭哲榮喊10月攻5萬 「這7檔」低位階股成焦點 - Yahoo股市</a>
+          <span class="news-source">Yahoo股市</span>
+        </li>
+        
+        <li>
+          <a href="https://news.google.com/rss/articles/CBMiUEFVX3lxTE04UV9PbExKQ0pidk04OXFtejZUZXVRN0tQaTJVdzd2RkNCY29Rako4Z05HZmtfXzJhOXI1SmVqM1h0WElGOGJJU3ZzdlVQZVBt0gFWQVVfeXFMUGRiMzF3YXFxVjNYWEVYVDBjM2Nyc3hnWnFXWXl2SEVVaFNMb291Y2ZraDJpbFkwUWdYRnRrcE5KTVlHZl9DVE5YRFJEb2ZDME5rWlRlWmc?oc=5" target="_blank" rel="noopener">台股飆新高 法人按讚Q4…今年來漲66%稱冠亞股 - UDN</a>
+          <span class="news-source">UDN</span>
+        </li>
+        
+        <li>
+          <a href="https://news.google.com/rss/articles/CBMi5wFBVV95cUxOSDZfbFhYRDVpdW4wbFlrVjQ1d1FDUFFHcWtxdXQzSUt1eXZESlUwOWFoYm9UbG5raTBOckw0NGtjZm1CSVVTZTkyVDg1Z0V3QmFPYmREei1rT1g3S3poeEZEYXZTcWtLd2p3WGsyNXdpQWNtXzdsUC14aUtSYll5aURxdUdadmV2TTFFeF9veGk3bmN2TVo4NU42dDJhTFFxZDFwNTdZRjYxUlc5WXZxUlFPdEU3RElKWlBVN2ZjVHRDc2hBR01nZW41dzRqODdIWVZoRUM3aFM4WWdGTDN6bjVxLUczNEk?oc=5" target="_blank" rel="noopener">費半強彈、大盤死守 47,500 防線，聚焦 ABF、被動元件與高階 CCL - TechNews 科技新報</a>
+          <span class="news-source">TechNews 科技新報</span>
+        </li>
+        
+        <li>
+          <a href="https://news.google.com/rss/articles/CBMiWEFVX3lxTFB3eGxubjVpWkMxdUxMUy0zRXF4dWcwR2NuQzRiZ3hhNGZSZ0lVcTlYRDc3TjBQM0VYQ1luNnNRX1J4NDJFM2Q0YzdLWm56UFpZdFRZVnA2dXE?oc=5" target="_blank" rel="noopener">大盤已創新高但台積電卻未創高?48218轉支撐V轉有守，下周大盤想續創高靠台積電 - 玩股網</a>
+          <span class="news-source">玩股網</span>
+        </li>
+        
+        <li>
+          <a href="https://news.google.com/rss/articles/CBMigAFBVV95cUxNcUk5SlJua1A5R3NncUwwSEJQNGdSdjBIdzBxWWxFZm9jUjlFSWh1VFhIWUdtX0FmZkNnWFY0cUg2X0oxanNOYWVsYUFoN2RwMno3SXVnVmVQQXRBVHpGamNZc0l2Y1oyeHk5alZqXzFSNjFpUTNvX2k4TmU1S0dYRA?oc=5" target="_blank" rel="noopener">台股第4季買什麼？台積電、富邦金...杜金龍公開4檔口袋名單「一路抱到明年5月」：台塑四寶「這檔」暴賺170% - 今周刊</a>
+          <span class="news-source">今周刊</span>
+        </li>
+        
+      </ul>
+    </div>
+
+    <footer>
+      <div>產生時間：2026-10-02 20:49</div>
+      <div class="disclaimer">本頁內容由 Gemini AI 自動彙整，僅供參考，不構成投資建議。</div>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>台股晨報 {{ generated_date }}</title>
+<style>
+  :root {
+    --up: #e5484d;
+    --down: #2f9e44;
+    --flat: #868e96;
+    --bg: #f4f5f7;
+    --card-bg: #ffffff;
+    --text: #1a1a1a;
+    --muted: #6b7280;
+    --accent-1: #4f46e5;
+    --accent-2: #0ea5e9;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC",
+      "Microsoft JhengHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 16px 48px;
+  }
+  header.hero {
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    color: #fff;
+    padding: 32px 16px 28px;
+    text-align: center;
+    border-radius: 0 0 24px 24px;
+    margin-bottom: 20px;
+  }
+  header.hero .date {
+    font-size: 14px;
+    opacity: 0.85;
+    margin-bottom: 4px;
+  }
+  header.hero h1 {
+    margin: 4px 0 16px;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .index-value {
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+  }
+  .index-change {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .index-change.up { color: #ffe3e3; }
+  .index-change.down { color: #d3f9d8; }
+  .index-change.flat { color: #e9ecef; }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .card h2 {
+    font-size: 16px;
+    margin: 0 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card h2 .emoji { font-size: 18px; }
+
+  .summary-section { margin-bottom: 14px; }
+  .summary-section:last-child { margin-bottom: 0; }
+  .summary-section h3 {
+    font-size: 14px;
+    color: var(--accent-1);
+    margin: 0 0 6px;
+  }
+  .summary-section p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text);
+    white-space: pre-line;
+  }
+
+  .sector-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .sector-item {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  .sector-item .name {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+  .sector-item .pct {
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .pct.up, .index-value.up, .name-badge.up { color: var(--up); }
+  .pct.down, .index-value.down, .name-badge.down { color: var(--down); }
+  .pct.flat, .index-value.flat, .name-badge.flat { color: var(--flat); }
+
+  .news-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .news-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+  }
+  .news-list li:last-child { border-bottom: none; }
+  .news-list a {
+    color: var(--text);
+    text-decoration: none;
+  }
+  .news-list a:hover { color: var(--accent-1); }
+  .news-source {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  footer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    padding: 16px 0 0;
+  }
+  footer .disclaimer {
+    margin-top: 6px;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <div class="date">{{ generated_date }} 台股晨報</div>
+      <h1>{{ index.name }}</h1>
+      <div class="index-value {{ index.trend }}">{{ "%.2f"|format(index.close) }}</div>
+      <div class="index-change {{ index.trend }}">
+        {{ index.change_sign }}{{ "%.2f"|format(index.change_points) }} 點
+        （{{ index.change_sign }}{{ "%.2f"|format(index.change_percent) }}%）
+      </div>
+    </header>
+
+    <div class="card">
+      <h2><span class="emoji">🤖</span> AI 盤勢摘要</h2>
+      <p style="font-size:14px; white-space: pre-line;">{{ ai_summary }}</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="emoji">🔥</span> 焦點族群</h2>
+      <div class="sector-grid">
+        {% for s in sectors %}
+        <div class="sector-item">
+          <div class="name">{{ s.name }}</div>
+          <div class="pct {{ s.trend }}">{{ s.change_sign }}{{ "%.2f"|format(s.change_percent) }}%</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="emoji">📰</span> 財經新聞</h2>
+      <ul class="news-list">
+        {% for n in news %}
+        <li>
+          <a href="{{ n.link }}" target="_blank" rel="noopener">{{ n.title }}</a>
+          {% if n.source %}<span class="news-source">{{ n.source }}</span>{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <footer>
+      <div>產生時間：{{ generated_at }}</div>
+      <div class="disclaimer">本頁內容由 Gemini AI 自動彙整，僅供參考，不構成投資建議。</div>
+    </footer>
+  </div>
+</body>
+</html>
