@@ -1,7 +1,9 @@
-"""抓取台灣證券交易所（TWSE）OpenAPI 的大盤指數與類股指數資料。
+"""抓取台灣證券交易所（TWSE）OpenAPI 的大盤指數、類股指數與個股行情。
 
-資料來源：https://openapi.twse.com.tw/v1/exchangeReport/MI_INDEX
-（公開資料，不需要 API Key）
+資料來源：
+- https://openapi.twse.com.tw/v1/exchangeReport/MI_INDEX（大盤與類股指數）
+- https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL（全市場個股當日收盤行情）
+（皆為公開資料，不需要 API Key）
 """
 
 from __future__ import annotations
@@ -11,6 +13,7 @@ from dataclasses import dataclass
 import requests
 
 MI_INDEX_URL = "https://openapi.twse.com.tw/v1/exchangeReport/MI_INDEX"
+STOCK_DAY_ALL_URL = "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL"
 WEIGHTED_INDEX_NAME = "發行量加權股價指數"
 REQUEST_TIMEOUT = 10
 
@@ -31,6 +34,16 @@ class IndexQuote:
     @property
     def is_down(self) -> bool:
         return self.change_sign == "-"
+
+
+@dataclass(frozen=True)
+class StockQuote:
+    code: str
+    name: str
+    close: float
+    change_points: float
+    change_percent: float
+    trade_value: float
 
 
 def _to_float(value: str) -> float:
@@ -88,3 +101,44 @@ def fetch_sector_indices(top_n: int | None = None) -> list[IndexQuote]:
     if top_n is not None:
         sectors = sectors[:top_n]
     return sectors
+
+
+def _is_common_stock_code(code: str) -> bool:
+    """排除 ETF／ETN（代號以 00 開頭）與非標準 4 位數代號，只保留一般上市股票。"""
+    return len(code) == 4 and code.isdigit() and not code.startswith("00")
+
+
+def _parse_stock_row(row: dict) -> StockQuote | None:
+    closing_price = row.get("ClosingPrice", "")
+    if not closing_price:
+        return None
+    close = _to_float(closing_price)
+    change_points = _to_float(row.get("Change", "0"))
+    prev_close = close - change_points
+    change_percent = (change_points / prev_close * 100) if prev_close else 0.0
+    return StockQuote(
+        code=row["Code"],
+        name=row["Name"],
+        close=close,
+        change_points=change_points,
+        change_percent=change_percent,
+        trade_value=_to_float(row.get("TradeValue", "0")),
+    )
+
+
+def fetch_top_stocks_by_value(top_n: int = 60) -> list[StockQuote]:
+    """抓取全市場個股當日實際收盤行情，依成交金額（流動性）排序，排除 ETF。
+
+    這份資料用來讓 AI 選股時有「真實股價」可以參考，避免憑訓練記憶編造不符實際
+    價格量級的進場區間／防守價。
+    """
+    response = requests.get(STOCK_DAY_ALL_URL, timeout=REQUEST_TIMEOUT)
+    response.raise_for_status()
+    rows = response.json()
+    quotes = [
+        quote
+        for quote in (_parse_stock_row(row) for row in rows)
+        if quote is not None and _is_common_stock_code(quote.code)
+    ]
+    quotes.sort(key=lambda q: q.trade_value, reverse=True)
+    return quotes[:top_n]

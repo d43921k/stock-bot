@@ -4,7 +4,7 @@ import pytest
 
 from stock_bot.analysis.gemini_client import GeminiClient, build_prompt
 from stock_bot.fetchers.news import NewsItem
-from stock_bot.fetchers.twse import IndexQuote
+from stock_bot.fetchers.twse import IndexQuote, StockQuote
 
 SECTORS = [
     IndexQuote(
@@ -24,6 +24,16 @@ NEWS = [
         source="鉅亨網",
     ),
 ]
+STOCK_POOL = [
+    StockQuote(
+        code="2308",
+        name="台達電",
+        close=1905.0,
+        change_points=15.0,
+        change_percent=0.79,
+        trade_value=11586905180.0,
+    ),
+]
 
 FAKE_ANALYSIS = {
     "news_summary": "新聞摘要測試內容",
@@ -37,10 +47,12 @@ FAKE_ANALYSIS = {
 
 
 def test_build_prompt_includes_key_data():
-    prompt = build_prompt(SECTORS, NEWS)
+    prompt = build_prompt(SECTORS, NEWS, STOCK_POOL)
 
     assert "半導體類指數" in prompt
     assert "台股大漲創新高" in prompt
+    assert "2308" in prompt
+    assert "1905.0" in prompt
 
 
 def test_gemini_client_requires_api_key():
@@ -57,7 +69,7 @@ def test_analyze_market_calls_generate_content_with_schema(mock_client_cls):
     mock_client_cls.return_value = mock_client
 
     client = GeminiClient(api_key="fake-key", model="gemini-3.5-flash")
-    result = client.analyze_market(SECTORS, NEWS)
+    result = client.analyze_market(SECTORS, NEWS, STOCK_POOL)
 
     assert result == FAKE_ANALYSIS
     mock_client.models.generate_content.assert_called_once()
@@ -65,3 +77,4 @@ def test_analyze_market_calls_generate_content_with_schema(mock_client_cls):
     assert kwargs["model"] == "gemini-3.5-flash"
     assert kwargs["config"]["response_mime_type"] == "application/json"
     assert "半導體類指數" in kwargs["contents"]
+    assert "2308" in kwargs["contents"]
