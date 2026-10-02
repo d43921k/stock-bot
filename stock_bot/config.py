@@ -22,7 +22,7 @@ class Settings:
 def load_settings() -> Settings:
     return Settings(
         gemini_api_key=os.getenv("GEMINI_API_KEY", ""),
-        gemini_model=os.getenv("GEMINI_MODEL", "gemini-2.5-flash"),
+        gemini_model=os.getenv("GEMINI_MODEL", "gemini-3.5-flash"),
         news_query=os.getenv("NEWS_QUERY", "台股 大盤"),
         news_limit=int(os.getenv("NEWS_LIMIT", "10")),
         report_output_path=os.getenv("REPORT_OUTPUT_PATH", "docs/index.html"),
