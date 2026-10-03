@@ -55,6 +55,9 @@ ANALYSIS = {
             {"ticker": "2454", "name": "聯發科", "entry_range": "1300-1320", "stop_loss": "1250", "reason": "長線理由"}
         ],
     },
+    "breakout_picks": [
+        {"ticker": "6999", "name": "小飆股", "entry_range": "20-22", "stop_loss": "18", "reason": "爆發股理由"}
+    ],
 }
 
 
@@ -89,6 +92,9 @@ def test_generate_report_writes_mobile_friendly_html(tmp_path):
     assert "950-960" in html
     assert "930" in html
     assert "2026-10-02 07:30" in html
+    assert "小飆股" in html  # 爆發股
+    assert "2026-10-02" in html  # 標題用產生當天日期
+    assert "資料日期：2026-10-01" in html  # 資料實際日期（前一交易日收盤）
 
 
 def test_generate_report_creates_parent_dirs(tmp_path):

@@ -11,13 +11,19 @@ from datetime import datetime
 from stock_bot.analysis.analyzer import analyze_market
 from stock_bot.config import load_settings
 from stock_bot.fetchers.news import fetch_news
-from stock_bot.fetchers.twse import fetch_named_indices, fetch_sector_indices, fetch_top_stocks_by_value
+from stock_bot.fetchers.twse import (
+    fetch_named_indices,
+    fetch_sector_indices,
+    fetch_top_gainers,
+    fetch_top_stocks_by_value,
+)
 from stock_bot.fetchers.us_indices import fetch_us_indices
 from stock_bot.report.generator import generate_report
 
 TW_DASHBOARD_INDEX_NAMES = ["發行量加權股價指數", "臺灣50指數", "臺灣高股息指數"]
 SECTOR_TOP_N = 5
 STOCK_POOL_TOP_N = 60
+GAINER_POOL_TOP_N = 30
 
 
 def run() -> str:
@@ -44,8 +50,14 @@ def run() -> str:
     stock_pool = fetch_top_stocks_by_value(top_n=STOCK_POOL_TOP_N)
     print(f"  共 {len(stock_pool)} 檔個股")
 
+    print(f"抓取當日漲幅最高個股（前 {GAINER_POOL_TOP_N}，作為爆發股候選）...")
+    gainer_pool = fetch_top_gainers(top_n=GAINER_POOL_TOP_N)
+    print(f"  共 {len(gainer_pool)} 檔個股")
+
     print(f"呼叫 Gemini（{settings.gemini_model}）分析新聞並挑選潛力股...")
-    analysis = analyze_market(settings, sectors=sectors, news=news, stock_pool=stock_pool)
+    analysis = analyze_market(
+        settings, sectors=sectors, news=news, stock_pool=stock_pool, gainer_pool=gainer_pool
+    )
 
     print(f"產生 HTML 晨報 -> {settings.report_output_path}")
     output_path = generate_report(

@@ -51,8 +51,15 @@ RESPONSE_SCHEMA = {
             },
             "required": ["short_term", "mid_term", "long_term"],
         },
+        "breakout_picks": {
+            "type": "array",
+            "items": _STOCK_PICK_SCHEMA,
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "有機會漲幅超過 50% 的高風險爆發股，剛好 3 檔",
+        },
     },
-    "required": ["news_summary", "news_conclusion", "stock_picks"],
+    "required": ["news_summary", "news_conclusion", "stock_picks", "breakout_picks"],
 }
 
 
@@ -68,8 +75,9 @@ class GeminiClient:
         sectors: list[IndexQuote],
         news: list[NewsItem],
         stock_pool: list[StockQuote],
+        gainer_pool: list[StockQuote],
     ) -> dict:
-        prompt = build_prompt(sectors, news, stock_pool)
+        prompt = build_prompt(sectors, news, stock_pool, gainer_pool)
         response = self._client.models.generate_content(
             model=self._model,
             contents=prompt,

@@ -2,9 +2,9 @@ name: Daily Stock Report
 
 on:
   schedule:
-    # 每個交易日週一至週五 15:00 台灣時間（UTC+8）執行，即收盤（13:30）後約 1.5 小時，
-    # 讓 TWSE 當日收盤資料穩定後再抓取。cron 以 UTC 表示：07:00 UTC = 15:00 台灣時間。
-    - cron: "0 7 * * 1-5"
+    # 每天 08:30 台灣時間（UTC+8）執行，開盤（09:00）前產生晨報；此時抓到的台股/美股
+    # 資料即為前一交易日收盤（美股為隔夜收盤）。cron 以 UTC 表示：00:30 UTC = 08:30 台灣時間。
+    - cron: "30 0 * * *"
   workflow_dispatch: {}
 
 permissions:

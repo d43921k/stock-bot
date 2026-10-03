@@ -30,12 +30,24 @@ STOCK_POOL = [
         trade_value=11586905180.0,
     ),
 ]
+GAINER_POOL = [
+    StockQuote(
+        code="6999",
+        name="小飆股",
+        close=22.0,
+        change_points=2.0,
+        change_percent=10.0,
+        trade_value=50000000.0,
+    ),
+]
 
 
 def test_build_prompt_includes_key_data():
-    prompt = build_prompt(SECTORS, NEWS, STOCK_POOL)
+    prompt = build_prompt(SECTORS, NEWS, STOCK_POOL, GAINER_POOL)
 
     assert "半導體類指數" in prompt
     assert "台股大漲創新高" in prompt
     assert "2308" in prompt
     assert "1905.0" in prompt
+    assert "6999" in prompt
+    assert "breakout_picks" in prompt

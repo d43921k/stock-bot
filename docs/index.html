@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>台股晨報 2026-10-02</title>
+<title>台股晨報 2026-10-03</title>
 <style>
   :root {
     --up: #e5484d;
@@ -173,6 +173,18 @@
   .stock-item .price-row b { color: var(--text); }
   .stock-item .reason { font-size: 12.5px; color: var(--text); }
 
+  /* 爆發股（高風險） */
+  .breakout-warning {
+    background: #fff4e6;
+    border: 1px solid #ffd8a8;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 12.5px;
+    color: #d9480f;
+    margin-bottom: 12px;
+  }
+  .stock-item.breakout { border-color: #ffd8a8; background: #fffaf3; }
+
   footer {
     text-align: center;
     font-size: 12px;
@@ -183,14 +195,16 @@
 </style>
 </head>
 <body>
+  
   <div class="container">
     <header class="hero">
-      <div class="date">2026-10-02</div>
+      <div class="date">2026-10-03</div>
       <h1>台股晨報</h1>
     </header>
 
     <div class="card">
       <h2><span class="emoji">📊</span> 大盤指數</h2>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">資料日期：2026-10-02 收盤</div>
       <h3 class="sub-heading">美股</h3>
       <div class="index-grid">
         
@@ -279,8 +293,8 @@
         </li>
         
         <li>
-          <a href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE0ta1NaLWlkckdETDRab1lXR0g1WVZDZDl6TTFpMHVNM3Yzamk0dnlVcHAtVWVUNC1ZRnlzYUdEWjY2UGhrOC1FQkZ1RGdnM2Z3N2tIRHIwdGlIX0lvd2x3?oc=5" target="_blank" rel="noopener">52檔台股ETF 前三季贏大盤- 日報 - 工商時報</a>
-          <span class="news-source">工商時報</span>
+          <a href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE0ta1NaLWlkckdETDRab1lXR0g1WVZDZDl6TTFpMHVNM3Yzamk0dnlVcHAtVWVUNC1ZRnlzYUdEWjY2UGhrOC1FQkZ1RGdnM2Z3N2tIRHIwdGlIX0lvd2x3?oc=5" target="_blank" rel="noopener">52檔台股ETF 前三季贏大盤- 日報 - ctee.com.tw</a>
+          <span class="news-source">ctee.com.tw</span>
         </li>
         
         <li>
@@ -314,21 +328,21 @@
         </li>
         
         <li>
-          <a href="https://news.google.com/rss/articles/CBMigwJBVV95cUxNX0VodGdzcTRiRnVwdHhvdTlqQ0RPODZTZFJ0ODdtRVVpU1FGeEhHNHZ1cV9HY01nMjlmclBlSlZsamZsejlqd2tudU1icENWZkItcnBpZjc2cXNsSkxkTXI5NFlaZi1oa2p1TGZvbzJNUUtkQmc5QkVPSFpkdmsxX0d5V0ZiN1lnRjFkVGVmbmRSR1B1bjlVTjVYb2xTb2hvdTh4SVpwUGtKSmZYZjlGU1NoeTBYYXJ4cWI1WnBsSDZyODluc1RPZjJaaHdwUE5qanQzTWRvNmFfaEZ5ZFYwVkFxbVhCYjZYR0F0cXpjS00yNm5RR3ZNYjJ4alF4cTlQSHNv?oc=5" target="_blank" rel="noopener">8檔台股高息ETF 9月含息績效打敗大盤 - Yahoo新聞</a>
-          <span class="news-source">Yahoo新聞</span>
+          <a href="https://news.google.com/rss/articles/CBMigwJBVV95cUxNX0VodGdzcTRiRnVwdHhvdTlqQ0RPODZTZFJ0ODdtRVVpU1FGeEhHNHZ1cV9HY01nMjlmclBlSlZsamZsejlqd2tudU1icENWZkItcnBpZjc2cXNsSkxkTXI5NFlaZi1oa2p1TGZvbzJNUUtkQmc5QkVPSFpkdmsxX0d5V0ZiN1lnRjFkVGVmbmRSR1B1bjlVTjVYb2xTb2hvdTh4SVpwUGtKSmZYZjlGU1NoeTBYYXJ4cWI1WnBsSDZyODluc1RPZjJaaHdwUE5qanQzTWRvNmFfaEZ5ZFYwVkFxbVhCYjZYR0F0cXpjS00yNm5RR3ZNYjJ4alF4cTlQSHNv?oc=5" target="_blank" rel="noopener">8檔台股高息ETF 9月含息績效打敗大盤 - tw.news.yahoo.com</a>
+          <span class="news-source">tw.news.yahoo.com</span>
         </li>
         
         <li>
-          <a href="https://news.google.com/rss/articles/CBMi6wJBVV95cUxPaEdNZ243dTNmRXBnN3BvVDNWcUVVcWJFRU5XdW9qemZsR1NsRlVQd1ZlQ2lOX2MtTnY4cG9FUGtsdlVCVUh5V0dDN2ZTNm55QjViQlRLV2NWZFF6N296Tm5QRkxYdGUzanFzX0hJdVlXREFoODIzV0tYX3BnWVlSb1k1a0xuYTNOdUp4dm9RSWphei02OUZ5MC1CVVhQUHZrM3pZcVRqSzhHd0otUEJGWDZ1WnBpZ0MwRnItZGhmbFppN21FMHVmWjdmSXFuRVg1NnkzVVFGcUxrdXdrMXJLTHJwMWtfQUhBa2w2VWFQUmhIVVo1ZWMyVkp5djBTV2lCZ1VkS1VTWTlhVnZTcTJTX2VzRGRkU2paeUJKcTFad1lBUVFYNlhkRmdMRlFXcEF4dV96RHhQUVhaUTVXel9vSjl2alQzZnZiSU16eWVmOHk1Z3FyVlhfbTc1clVUN3RtUWtIX1NrWGRpbU0?oc=5" target="_blank" rel="noopener">台股主動ETF績效排行》Q3僅6檔勝大盤 冠軍名叫「高息」卻重押AI、漲近8%奪冠 - Yahoo新聞</a>
-          <span class="news-source">Yahoo新聞</span>
+          <a href="https://news.google.com/rss/articles/CBMi6wJBVV95cUxPaEdNZ243dTNmRXBnN3BvVDNWcUVVcWJFRU5XdW9qemZsR1NsRlVQd1ZlQ2lOX2MtTnY4cG9FUGtsdlVCVUh5V0dDN2ZTNm55QjViQlRLV2NWZFF6N296Tm5QRkxYdGUzanFzX0hJdVlXREFoODIzV0tYX3BnWVlSb1k1a0xuYTNOdUp4dm9RSWphei02OUZ5MC1CVVhQUHZrM3pZcVRqSzhHd0otUEJGWDZ1WnBpZ0MwRnItZGhmbFppN21FMHVmWjdmSXFuRVg1NnkzVVFGcUxrdXdrMXJLTHJwMWtfQUhBa2w2VWFQUmhIVVo1ZWMyVkp5djBTV2lCZ1VkS1VTWTlhVnZTcTJTX2VzRGRkU2paeUJKcTFad1lBUVFYNlhkRmdMRlFXcEF4dV96RHhQUVhaUTVXel9vSjl2alQzZnZiSU16eWVmOHk1Z3FyVlhfbTc1clVUN3RtUWtIX1NrWGRpbU0?oc=5" target="_blank" rel="noopener">台股主動ETF績效排行》Q3僅6檔勝大盤 冠軍名叫「高息」卻重押AI、漲近8%奪冠 - tw.news.yahoo.com</a>
+          <span class="news-source">tw.news.yahoo.com</span>
         </li>
         
       </ul>
       <div class="ai-block">
         <h3>🤖 新聞摘要</h3>
-        <p>多則報導聚焦台股創新高、ETF表現突出以及油電燃氣、化學、塑膠等族群領漲，法人持續看好Q4走勢，外資空單減少，市場熱度延續。</p>
+        <p>台股再度突破48,000點，創新高，受益於油電燃氣與化學類股強勢拉抬，ETF表現突出，外資期貨空單縮減。市場焦點集中在低位階股與高息ETF，同時投資人關注台積電走勢與AI題材。</p>
         <h3>總結</h3>
-        <p>市場在突破48K後仍受波動測試，需留意美股與匯率變動及法人資金出入可能造成回檔風險。</p>
+        <p>大盤持續上揚但仍受波動影響，需留意法人資金流向與外資期貨空單變化，短線波動或加大。</p>
       </div>
     </div>
 
@@ -337,187 +351,230 @@
       <h3 class="sub-heading">短線（1-2 週）</h3>
       <div class="stock-list">
         
-        <div class="stock-item">
-          <div class="stock-head">
-            <span><span class="stock-name">臻鼎-KY</span><span class="stock-ticker">4958</span></span>
-          </div>
-          <div class="price-row">
-            <span>進場區間：<b>560-570</b></span>
-            <span>防守價：<b>540</b></span>
-          </div>
-          <div class="reason">近期漲幅逾10%，受惠新能源設備需求。</div>
-        </div>
-        
-        <div class="stock-item">
-          <div class="stock-head">
-            <span><span class="stock-name">華新科</span><span class="stock-ticker">2492</span></span>
-          </div>
-          <div class="price-row">
-            <span>進場區間：<b>355-365</b></span>
-            <span>防守價：<b>340</b></span>
-          </div>
-          <div class="reason">高階封測技術獲訂單，股價突破阻力。</div>
-        </div>
-        
-        <div class="stock-item">
-          <div class="stock-head">
-            <span><span class="stock-name">尖點</span><span class="stock-ticker">8021</span></span>
-          </div>
-          <div class="price-row">
-            <span>進場區間：<b>545-555</b></span>
-            <span>防守價：<b>530</b></span>
-          </div>
-          <div class="reason">光通訊模組需求回暖，走勢強勁。</div>
-        </div>
-        
-        <div class="stock-item">
-          <div class="stock-head">
-            <span><span class="stock-name">光聖</span><span class="stock-ticker">6442</span></span>
-          </div>
-          <div class="price-row">
-            <span>進場區間：<b>1580-1600</b></span>
-            <span>防守價：<b>1550</b></span>
-          </div>
-          <div class="reason">光電元件出口提升，持續上攻。</div>
-        </div>
-        
-        <div class="stock-item">
-          <div class="stock-head">
-            <span><span class="stock-name">中華化</span><span class="stock-ticker">1727</span></span>
-          </div>
-          <div class="price-row">
-            <span>進場區間：<b>119-121</b></span>
-            <span>防守價：<b>115</b></span>
-          </div>
-          <div class="reason">化學原料價格回升，獲利改善。</div>
-        </div>
-        
+  <div class="stock-item">
+    <div class="stock-head">
+      <span><span class="stock-name">臻鼎-KY</span><span class="stock-ticker">4958</span></span>
+    </div>
+    <div class="price-row">
+      <span>進場區間：<b>560-580</b></span>
+      <span>防守價：<b>520</b></span>
+    </div>
+    <div class="reason">KY題材配合油氣需求，近兩日突破10%</div>
+  </div>
+  
+  <div class="stock-item">
+    <div class="stock-head">
+      <span><span class="stock-name">華新科</span><span class="stock-ticker">2492</span></span>
+    </div>
+    <div class="price-row">
+      <span>進場區間：<b>360-380</b></span>
+      <span>防守價：<b>340</b></span>
+    </div>
+    <div class="reason">高分子材料受益塑膠指數上揚</div>
+  </div>
+  
+  <div class="stock-item">
+    <div class="stock-head">
+      <span><span class="stock-name">光聖</span><span class="stock-ticker">6442</span></span>
+    </div>
+    <div class="price-row">
+      <span>進場區間：<b>1600-1650</b></span>
+      <span>防守價：<b>1500</b></span>
+    </div>
+    <div class="reason">光電元件需求回暖，漲幅持續</div>
+  </div>
+  
+  <div class="stock-item">
+    <div class="stock-head">
+      <span><span class="stock-name">南茂</span><span class="stock-ticker">8150</span></span>
+    </div>
+    <div class="price-row">
+      <span>進場區間：<b>125-135</b></span>
+      <span>防守價：<b>115</b></span>
+    </div>
+    <div class="reason">電容封裝題材，成交放大</div>
+  </div>
+  
+  <div class="stock-item">
+    <div class="stock-head">
+      <span><span class="stock-name">騰輝電子-KY</span><span class="stock-ticker">6672</span></span>
+    </div>
+    <div class="price-row">
+      <span>進場區間：<b>435-455</b></span>
+      <span>防守價：<b>400</b></span>
+    </div>
+    <div class="reason">半導體測試板卡，短線動能強</div>
+  </div>
+  
       </div>
       <h3 class="sub-heading">中線（1-3 個月）</h3>
       <div class="stock-list">
         
-        <div class="stock-item">
-          <div class="stock-head">
-            <span><span class="stock-name">國巨</span><span class="stock-ticker">2327</span></span>
-          </div>
-          <div class="price-row">
-            <span>進場區間：<b>620-630</b></span>
-            <span>防守價：<b>600</b></span>
-          </div>
-          <div class="reason">被動元件需求穩健，股價回檔有支撐。</div>
-        </div>
-        
-        <div class="stock-item">
-          <div class="stock-head">
-            <span><span class="stock-name">台光電</span><span class="stock-ticker">2383</span></span>
-          </div>
-          <div class="price-row">
-            <span>進場區間：<b>5100-5200</b></span>
-            <span>防守價：<b>5000</b></span>
-          </div>
-          <div class="reason">光電面板出貨回升，產能擴張預期。</div>
-        </div>
-        
-        <div class="stock-item">
-          <div class="stock-head">
-            <span><span class="stock-name">晶技</span><span class="stock-ticker">3042</span></span>
-          </div>
-          <div class="price-row">
-            <span>進場區間：<b>225-235</b></span>
-            <span>防守價：<b>210</b></span>
-          </div>
-          <div class="reason">半導體先進製程料片需求持續增長。</div>
-        </div>
-        
-        <div class="stock-item">
-          <div class="stock-head">
-            <span><span class="stock-name">致茂</span><span class="stock-ticker">2360</span></span>
-          </div>
-          <div class="price-row">
-            <span>進場區間：<b>2150-2200</b></span>
-            <span>防守價：<b>2050</b></span>
-          </div>
-          <div class="reason">電力設備在能源轉型中受惠，基本面佳。</div>
-        </div>
-        
-        <div class="stock-item">
-          <div class="stock-head">
-            <span><span class="stock-name">南電</span><span class="stock-ticker">8046</span></span>
-          </div>
-          <div class="price-row">
-            <span>進場區間：<b>1440-1460</b></span>
-            <span>防守價：<b>1400</b></span>
-          </div>
-          <div class="reason">燃氣發電盈利提升，受油電燃氣族群帶動。</div>
-        </div>
-        
+  <div class="stock-item">
+    <div class="stock-head">
+      <span><span class="stock-name">國巨</span><span class="stock-ticker">2327</span></span>
+    </div>
+    <div class="price-row">
+      <span>進場區間：<b>620-640</b></span>
+      <span>防守價：<b>580</b></span>
+    </div>
+    <div class="reason">被動元件需求持續，電動車升級</div>
+  </div>
+  
+  <div class="stock-item">
+    <div class="stock-head">
+      <span><span class="stock-name">台光電</span><span class="stock-ticker">2383</span></span>
+    </div>
+    <div class="price-row">
+      <span>進場區間：<b>5150-5250</b></span>
+      <span>防守價：<b>5000</b></span>
+    </div>
+    <div class="reason">OLED面板出貨回升，營收增長</div>
+  </div>
+  
+  <div class="stock-item">
+    <div class="stock-head">
+      <span><span class="stock-name">聯發科</span><span class="stock-ticker">2454</span></span>
+    </div>
+    <div class="price-row">
+      <span>進場區間：<b>4900-5050</b></span>
+      <span>防守價：<b>4700</b></span>
+    </div>
+    <div class="reason">5G/AI晶片持續訂單，基本面穩固</div>
+  </div>
+  
+  <div class="stock-item">
+    <div class="stock-head">
+      <span><span class="stock-name">致茂</span><span class="stock-ticker">2360</span></span>
+    </div>
+    <div class="price-row">
+      <span>進場區間：<b>2150-2250</b></span>
+      <span>防守價：<b>2000</b></span>
+    </div>
+    <div class="reason">功率模組在新能源應用擴大</div>
+  </div>
+  
+  <div class="stock-item">
+    <div class="stock-head">
+      <span><span class="stock-name">晶技</span><span class="stock-ticker">3042</span></span>
+    </div>
+    <div class="price-row">
+      <span>進場區間：<b>225-240</b></span>
+      <span>防守價：<b>210</b></span>
+    </div>
+    <div class="reason">先進封裝技術受矽晶圓需求推動</div>
+  </div>
+  
       </div>
       <h3 class="sub-heading">長線（半年以上）</h3>
       <div class="stock-list">
         
-        <div class="stock-item">
-          <div class="stock-head">
-            <span><span class="stock-name">台積電</span><span class="stock-ticker">2330</span></span>
-          </div>
-          <div class="price-row">
-            <span>進場區間：<b>2450-2500</b></span>
-            <span>防守價：<b>2400</b></span>
-          </div>
-          <div class="reason">全球領先晶圓代工，長期成長動能穩固。</div>
-        </div>
+  <div class="stock-item">
+    <div class="stock-head">
+      <span><span class="stock-name">台積電</span><span class="stock-ticker">2330</span></span>
+    </div>
+    <div class="price-row">
+      <span>進場區間：<b>2450-2550</b></span>
+      <span>防守價：<b>2300</b></span>
+    </div>
+    <div class="reason">先進製程領先全球，長期成長動能</div>
+  </div>
+  
+  <div class="stock-item">
+    <div class="stock-head">
+      <span><span class="stock-name">大立光</span><span class="stock-ticker">3008</span></span>
+    </div>
+    <div class="price-row">
+      <span>進場區間：<b>6200-6400</b></span>
+      <span>防守價：<b>5900</b></span>
+    </div>
+    <div class="reason">高階手機鏡頭需求穩定，毛利率高</div>
+  </div>
+  
+  <div class="stock-item">
+    <div class="stock-head">
+      <span><span class="stock-name">台達電</span><span class="stock-ticker">2308</span></span>
+    </div>
+    <div class="price-row">
+      <span>進場區間：<b>1850-1950</b></span>
+      <span>防守價：<b>1700</b></span>
+    </div>
+    <div class="reason">工業自動化與綠能佈局持續擴張</div>
+  </div>
+  
+  <div class="stock-item">
+    <div class="stock-head">
+      <span><span class="stock-name">南亞科</span><span class="stock-ticker">2408</span></span>
+    </div>
+    <div class="price-row">
+      <span>進場區間：<b>520-540</b></span>
+      <span>防守價：<b>470</b></span>
+    </div>
+    <div class="reason">記憶體需求回暖，營收結構改善</div>
+  </div>
+  
+  <div class="stock-item">
+    <div class="stock-head">
+      <span><span class="stock-name">金像電</span><span class="stock-ticker">2368</span></span>
+    </div>
+    <div class="price-row">
+      <span>進場區間：<b>1080-1150</b></span>
+      <span>防守價：<b>1000</b></span>
+    </div>
+    <div class="reason">電源模組在車用與伺服器市場成長</div>
+  </div>
+  
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="emoji">🚀</span> 爆發股精選</h2>
+      <div class="breakout-warning">
+        ⚠️ 高風險標的：波動劇烈，有機會短期漲幅超過 50%，但同樣可能快速重挫，請務必嚴格執行防守價，僅供參考。
+      </div>
+      <div class="stock-list">
         
-        <div class="stock-item">
-          <div class="stock-head">
-            <span><span class="stock-name">聯發科</span><span class="stock-ticker">2454</span></span>
-          </div>
-          <div class="price-row">
-            <span>進場區間：<b>4900-4950</b></span>
-            <span>防守價：<b>4800</b></span>
-          </div>
-          <div class="reason">5G與AI晶片布局持續，營收可期。</div>
-        </div>
-        
-        <div class="stock-item">
-          <div class="stock-head">
-            <span><span class="stock-name">大立光</span><span class="stock-ticker">3008</span></span>
-          </div>
-          <div class="price-row">
-            <span>進場區間：<b>6200-6290</b></span>
-            <span>防守價：<b>6100</b></span>
-          </div>
-          <div class="reason">高階光學元件市場領先，技術壁壘高。</div>
-        </div>
-        
-        <div class="stock-item">
-          <div class="stock-head">
-            <span><span class="stock-name">友達</span><span class="stock-ticker">2409</span></span>
-          </div>
-          <div class="price-row">
-            <span>進場區間：<b>39-41</b></span>
-            <span>防守價：<b>38</b></span>
-          </div>
-          <div class="reason">顯示面板循環回升，產能利用率提升。</div>
-        </div>
-        
-        <div class="stock-item">
-          <div class="stock-head">
-            <span><span class="stock-name">鴻海</span><span class="stock-ticker">2317</span></span>
-          </div>
-          <div class="price-row">
-            <span>進場區間：<b>245-255</b></span>
-            <span>防守價：<b>235</b></span>
-          </div>
-          <div class="reason">代工客戶多元化與電動車布局長期看好。</div>
-        </div>
-        
+  <div class="stock-item breakout">
+    <div class="stock-head">
+      <span><span class="stock-name">臻鼎-KY</span><span class="stock-ticker">4958</span></span>
+    </div>
+    <div class="price-row">
+      <span>進場區間：<b>560-580</b></span>
+      <span>防守價：<b>520</b></span>
+    </div>
+    <div class="reason">油氣開採題材刺激，近期量能放大，波動大</div>
+  </div>
+  
+  <div class="stock-item breakout">
+    <div class="stock-head">
+      <span><span class="stock-name">尖點</span><span class="stock-ticker">8021</span></span>
+    </div>
+    <div class="price-row">
+      <span>進場區間：<b>545-570</b></span>
+      <span>防守價：<b>500</b></span>
+    </div>
+    <div class="reason">電源模組新訂單驅動，短線易衝高，風險極高</div>
+  </div>
+  
+  <div class="stock-item breakout">
+    <div class="stock-head">
+      <span><span class="stock-name">光聖</span><span class="stock-ticker">6442</span></span>
+    </div>
+    <div class="price-row">
+      <span>進場區間：<b>1600-1650</b></span>
+      <span>防守價：<b>1500</b></span>
+    </div>
+    <div class="reason">光電元件題材持續，短期可能翻倍，波動劇烈</div>
+  </div>
+  
       </div>
     </div>
 
     <footer>
-      <div>產生時間：2026-10-03 13:56</div>
+      <div>產生時間：2026-10-03 14:19</div>
       <div class="disclaimer">
-        本頁內容（含新聞摘要、焦點族群與潛力股推薦）皆由 Gemini AI 自動產生，僅供參考，
-        不構成任何投資建議，進場與停損價位請自行審慎評估風險。
+        本頁內容（含新聞摘要、焦點族群、潛力股與爆發股推薦）皆由 AI 自動產生，僅供參考，
+        不構成任何投資建議，進場與停損價位請自行審慎評估風險，爆發股標的風險極高，請特別謹慎。
       </div>
     </footer>
   </div>

@@ -46,8 +46,9 @@ RESPONSE_SCHEMA = {
             "required": ["short_term", "mid_term", "long_term"],
             "additionalProperties": False,
         },
+        "breakout_picks": {"type": "array", "items": _STOCK_PICK_SCHEMA},
     },
-    "required": ["news_summary", "news_conclusion", "stock_picks"],
+    "required": ["news_summary", "news_conclusion", "stock_picks", "breakout_picks"],
     "additionalProperties": False,
 }
 
@@ -64,8 +65,9 @@ class GroqClient:
         sectors: list[IndexQuote],
         news: list[NewsItem],
         stock_pool: list[StockQuote],
+        gainer_pool: list[StockQuote],
     ) -> dict:
-        prompt = build_prompt(sectors, news, stock_pool)
+        prompt = build_prompt(sectors, news, stock_pool, gainer_pool)
         completion = self._client.chat.completions.create(
             model=self._model,
             messages=[

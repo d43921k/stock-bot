@@ -169,6 +169,16 @@ STOCK_DAY_ALL_ROWS = [
         "Change": "0.0000",
         "Transaction": "",
     },
+    {
+        "Date": "1151001",
+        "Code": "6999",
+        "Name": "小飆股",
+        "TradeVolume": "5000000",
+        "TradeValue": "50000000",  # 成交金額很小，不會排進 top_stocks_by_value 前段
+        "ClosingPrice": "22.00",
+        "Change": "2.00",  # 漲幅遠高於其他個股
+        "Transaction": "3000",
+    },
 ]
 
 
@@ -220,3 +230,25 @@ def test_fetch_top_stocks_by_value_respects_top_n(mock_get):
     quotes = twse.fetch_top_stocks_by_value(top_n=1)
 
     assert len(quotes) == 1
+
+
+@patch("stock_bot.fetchers.twse.requests.get")
+def test_fetch_top_gainers_sorted_by_change_percent_desc(mock_get):
+    mock_get.return_value = _mock_stock_day_all_response()
+
+    quotes = twse.fetch_top_gainers(top_n=10)
+
+    assert quotes[0].code == "6999"  # 漲幅最高，即使成交金額不是最大
+    percents = [q.change_percent for q in quotes]
+    assert percents == sorted(percents, reverse=True)
+
+
+@patch("stock_bot.fetchers.twse.requests.get")
+def test_fetch_top_gainers_excludes_etf_and_halted(mock_get):
+    mock_get.return_value = _mock_stock_day_all_response()
+
+    quotes = twse.fetch_top_gainers(top_n=10)
+    codes = [q.code for q in quotes]
+
+    assert "0050" not in codes
+    assert "00625K" not in codes

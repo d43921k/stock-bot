@@ -58,7 +58,8 @@ def render_report_html(
     generated_at = generated_at or datetime.now()
 
     return template.render(
-        generated_date=roc_date_to_iso(tw_indices[0].date),
+        generated_date=generated_at.strftime("%Y-%m-%d"),
+        data_date=roc_date_to_iso(tw_indices[0].date),
         generated_at=generated_at.strftime("%Y-%m-%d %H:%M"),
         tw_indices=[_quote_to_dict(q) for q in tw_indices],
         us_indices=[_quote_to_dict(q) for q in us_indices],
@@ -67,6 +68,7 @@ def render_report_html(
         news_summary=analysis["news_summary"],
         news_conclusion=analysis["news_conclusion"],
         stock_picks=analysis["stock_picks"],
+        breakout_picks=analysis["breakout_picks"],
     )
 
 

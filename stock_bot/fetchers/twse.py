@@ -126,19 +126,34 @@ def _parse_stock_row(row: dict) -> StockQuote | None:
     )
 
 
+def _fetch_common_stock_quotes() -> list[StockQuote]:
+    response = requests.get(STOCK_DAY_ALL_URL, timeout=REQUEST_TIMEOUT)
+    response.raise_for_status()
+    rows = response.json()
+    return [
+        quote
+        for quote in (_parse_stock_row(row) for row in rows)
+        if quote is not None and _is_common_stock_code(quote.code)
+    ]
+
+
 def fetch_top_stocks_by_value(top_n: int = 60) -> list[StockQuote]:
     """抓取全市場個股當日實際收盤行情，依成交金額（流動性）排序，排除 ETF。
 
     這份資料用來讓 AI 選股時有「真實股價」可以參考，避免憑訓練記憶編造不符實際
     價格量級的進場區間／防守價。
     """
-    response = requests.get(STOCK_DAY_ALL_URL, timeout=REQUEST_TIMEOUT)
-    response.raise_for_status()
-    rows = response.json()
-    quotes = [
-        quote
-        for quote in (_parse_stock_row(row) for row in rows)
-        if quote is not None and _is_common_stock_code(quote.code)
-    ]
+    quotes = _fetch_common_stock_quotes()
     quotes.sort(key=lambda q: q.trade_value, reverse=True)
+    return quotes[:top_n]
+
+
+def fetch_top_gainers(top_n: int = 30) -> list[StockQuote]:
+    """抓取當日漲幅最高的個股（排除 ETF），作為「爆發股」候選池。
+
+    已經在短時間內出現大幅漲勢的個股，比大型權值股更有可能延續動能，
+    用來讓 AI 挑選有機會續強的爆發股時有真實價格與動能依據可參考。
+    """
+    quotes = _fetch_common_stock_quotes()
+    quotes.sort(key=lambda q: q.change_percent, reverse=True)
     return quotes[:top_n]
