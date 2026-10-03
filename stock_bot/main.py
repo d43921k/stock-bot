@@ -1,4 +1,4 @@
-"""晨報產生流程進入點：抓資料 -> Gemini 分析/選股 -> 產生 HTML。
+"""晨報產生流程進入點：抓資料 -> AI 分析/選股（Gemini，失敗則備援 Groq） -> 產生 HTML。
 
 執行方式：
     python -m stock_bot.main
@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from stock_bot.analysis.gemini_client import GeminiClient
+from stock_bot.analysis.analyzer import analyze_market
 from stock_bot.config import load_settings
 from stock_bot.fetchers.news import fetch_news
 from stock_bot.fetchers.twse import fetch_named_indices, fetch_sector_indices, fetch_top_stocks_by_value
@@ -26,12 +26,12 @@ def run() -> str:
     print("抓取台股指數...")
     tw_indices = fetch_named_indices(TW_DASHBOARD_INDEX_NAMES)
     for q in tw_indices:
-        print(f"  {q.name}：{q.change_sign}{q.change_percent}%（收盤 {q.close}）")
+        print(f"  {q.name}：{q.change_sign}{abs(q.change_percent):.2f}%（收盤 {q.close:.2f}）")
 
     print("抓取美股指數...")
     us_indices = fetch_us_indices()
     for q in us_indices:
-        print(f"  {q.name}：{q.change_sign}{q.change_percent:.2f}%（收盤 {q.close:.2f}）")
+        print(f"  {q.name}：{q.change_sign}{abs(q.change_percent):.2f}%（收盤 {q.close:.2f}）")
 
     print(f"抓取焦點族群（前 {SECTOR_TOP_N}）...")
     sectors = fetch_sector_indices(top_n=SECTOR_TOP_N)
@@ -45,8 +45,7 @@ def run() -> str:
     print(f"  共 {len(stock_pool)} 檔個股")
 
     print(f"呼叫 Gemini（{settings.gemini_model}）分析新聞並挑選潛力股...")
-    client = GeminiClient(api_key=settings.gemini_api_key, model=settings.gemini_model)
-    analysis = client.analyze_market(sectors=sectors, news=news, stock_pool=stock_pool)
+    analysis = analyze_market(settings, sectors=sectors, news=news, stock_pool=stock_pool)
 
     print(f"產生 HTML 晨報 -> {settings.report_output_path}")
     output_path = generate_report(

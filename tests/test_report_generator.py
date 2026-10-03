@@ -104,3 +104,32 @@ def test_generate_report_creates_parent_dirs(tmp_path):
     )
 
     assert result_path.exists()
+
+
+def test_generate_report_down_day_has_single_minus_sign(tmp_path):
+    """TWSE 的漲跌百分比欄位本身就帶負號，不能再跟 change_sign 疊加成 "--0.02%"。"""
+    down_tw_indices = [
+        IndexQuote(
+            name="臺灣50指數",
+            date="1151001",
+            close=45032.27,
+            change_sign="-",
+            change_points=9.39,  # TWSE 的漲跌點數不帶號
+            change_percent=-0.02,  # TWSE 的漲跌百分比帶號
+        ),
+    ]
+    output_path = tmp_path / "index.html"
+
+    result_path = generate_report(
+        tw_indices=down_tw_indices,
+        us_indices=US_INDICES,
+        sectors=SECTORS,
+        news=NEWS,
+        analysis=ANALYSIS,
+        output_path=str(output_path),
+    )
+
+    html = result_path.read_text(encoding="utf-8")
+
+    assert "-0.02%" in html
+    assert "--0.02%" not in html

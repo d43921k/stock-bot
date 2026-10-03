@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 from stock_bot.fetchers import us_indices
 
 
-def _mock_response(close: float, prev_close: float, change_percent: float):
+def _mock_response(close: float, full_day_change: float, change_percent: float):
     mock_resp = MagicMock()
     mock_resp.raise_for_status.return_value = None
     mock_resp.json.return_value = {
@@ -12,7 +12,7 @@ def _mock_response(close: float, prev_close: float, change_percent: float):
                 {
                     "meta": {
                         "regularMarketPrice": close,
-                        "chartPreviousClose": prev_close,
+                        "fulldayChange": full_day_change,
                         "regularMarketChangePercent": change_percent,
                     }
                 }
@@ -24,7 +24,7 @@ def _mock_response(close: float, prev_close: float, change_percent: float):
 
 @patch("stock_bot.fetchers.us_indices.requests.get")
 def test_fetch_us_indices_returns_all_symbols(mock_get):
-    mock_get.return_value = _mock_response(51108.72, 50926.56, 0.358)
+    mock_get.return_value = _mock_response(51108.72, 182.16, 0.358)
 
     quotes = us_indices.fetch_us_indices()
 
@@ -36,23 +36,35 @@ def test_fetch_us_indices_returns_all_symbols(mock_get):
 
 
 @patch("stock_bot.fetchers.us_indices.requests.get")
-def test_fetch_us_indices_computes_change_points_and_sign(mock_get):
-    mock_get.return_value = _mock_response(51108.72, 50926.56, 0.358)
+def test_fetch_us_indices_up_day(mock_get):
+    mock_get.return_value = _mock_response(51108.72, 182.16, 0.358)
 
     quotes = us_indices.fetch_us_indices()
 
     quote = quotes[0]
-    assert round(quote.change_points, 2) == round(51108.72 - 50926.56, 2)
+    assert quote.change_points == 182.16
+    assert quote.change_percent == 0.358
     assert quote.is_up is True
     assert quote.change_sign == "+"
 
 
 @patch("stock_bot.fetchers.us_indices.requests.get")
 def test_fetch_us_indices_down_day(mock_get):
-    mock_get.return_value = _mock_response(50000.0, 50200.0, -0.4)
+    mock_get.return_value = _mock_response(50000.0, -200.0, -0.4)
 
     quotes = us_indices.fetch_us_indices()
 
     quote = quotes[0]
     assert quote.is_down is True
     assert quote.change_sign == "-"
+
+
+@patch("stock_bot.fetchers.us_indices.requests.get")
+def test_fetch_us_indices_change_points_and_percent_agree_in_sign(mock_get):
+    """change_points 與 change_percent 必須同方向，避免兩個欄位各說各話。"""
+    mock_get.return_value = _mock_response(50000.0, -200.0, -0.4)
+
+    quotes = us_indices.fetch_us_indices()
+
+    quote = quotes[0]
+    assert (quote.change_points < 0) == (quote.change_percent < 0)

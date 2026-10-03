@@ -14,6 +14,8 @@ load_dotenv()
 class Settings:
     gemini_api_key: str
     gemini_model: str
+    groq_api_key: str
+    groq_model: str
     news_query: str
     news_limit: int
     report_output_path: str
@@ -23,6 +25,8 @@ def load_settings() -> Settings:
     return Settings(
         gemini_api_key=os.getenv("GEMINI_API_KEY", ""),
         gemini_model=os.getenv("GEMINI_MODEL", "gemini-3.5-flash"),
+        groq_api_key=os.getenv("GROQ_API_KEY", ""),
+        groq_model=os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"),
         news_query=os.getenv("NEWS_QUERY", "台股 大盤"),
         news_limit=int(os.getenv("NEWS_LIMIT", "10")),
         report_output_path=os.getenv("REPORT_OUTPUT_PATH", "docs/index.html"),

@@ -51,12 +51,14 @@ def _fetch_one(symbol: str, name: str) -> IndexQuote:
     )
     response.raise_for_status()
     meta = response.json()["chart"]["result"][0]["meta"]
-    close = float(meta["regularMarketPrice"])
-    prev_close = float(meta["chartPreviousClose"])
+    # 用 fulldayChange／regularMarketChangePercent 這組 Yahoo 自己算好、互相一致的數字，
+    # 不要用 close - chartPreviousClose 計算點數——chartPreviousClose 在某些時段
+    # （例如非交易時間、range=5d 的邊界）會對應到不同天的收盤價，跟漲跌百分比的基準不一致，
+    # 導致算出來的漲跌方向跟 Yahoo 自己回報的漲跌百分比方向相反。
     return IndexQuote(
         name=name,
-        close=close,
-        change_points=close - prev_close,
+        close=float(meta["regularMarketPrice"]),
+        change_points=float(meta["fulldayChange"]),
         change_percent=float(meta["regularMarketChangePercent"]),
     )
 

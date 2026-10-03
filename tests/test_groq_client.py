@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from stock_bot.analysis.gemini_client import GeminiClient
+from stock_bot.analysis.groq_client import GroqClient
 from stock_bot.fetchers.news import NewsItem
 from stock_bot.fetchers.twse import IndexQuote, StockQuote
 
@@ -47,24 +47,28 @@ FAKE_ANALYSIS = {
 }
 
 
-def test_gemini_client_requires_api_key():
+def test_groq_client_requires_api_key():
     with pytest.raises(ValueError):
-        GeminiClient(api_key="", model="gemini-3.5-flash")
+        GroqClient(api_key="", model="openai/gpt-oss-120b")
 
 
-@patch("stock_bot.analysis.gemini_client.genai.Client")
-def test_analyze_market_calls_generate_content_with_schema(mock_client_cls):
+@patch("stock_bot.analysis.groq_client.Groq")
+def test_analyze_market_calls_chat_completions_with_strict_schema(mock_groq_cls):
     mock_client = MagicMock()
-    mock_client.models.generate_content.return_value = MagicMock(text=json.dumps(FAKE_ANALYSIS))
-    mock_client_cls.return_value = mock_client
+    mock_message = MagicMock(content=json.dumps(FAKE_ANALYSIS))
+    mock_client.chat.completions.create.return_value = MagicMock(
+        choices=[MagicMock(message=mock_message)]
+    )
+    mock_groq_cls.return_value = mock_client
 
-    client = GeminiClient(api_key="fake-key", model="gemini-3.5-flash")
+    client = GroqClient(api_key="fake-key", model="openai/gpt-oss-120b")
     result = client.analyze_market(SECTORS, NEWS, STOCK_POOL)
 
     assert result == FAKE_ANALYSIS
-    mock_client.models.generate_content.assert_called_once()
-    _, kwargs = mock_client.models.generate_content.call_args
-    assert kwargs["model"] == "gemini-3.5-flash"
-    assert kwargs["config"]["response_mime_type"] == "application/json"
-    assert "半導體類指數" in kwargs["contents"]
-    assert "2308" in kwargs["contents"]
+    mock_client.chat.completions.create.assert_called_once()
+    _, kwargs = mock_client.chat.completions.create.call_args
+    assert kwargs["model"] == "openai/gpt-oss-120b"
+    assert kwargs["response_format"]["json_schema"]["strict"] is True
+    user_message = next(m["content"] for m in kwargs["messages"] if m["role"] == "user")
+    assert "半導體類指數" in user_message
+    assert "2308" in user_message

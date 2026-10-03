@@ -21,12 +21,15 @@ def _trend(quote) -> str:
 
 
 def _quote_to_dict(quote) -> dict:
+    # change_sign 是唯一的正負號來源；change_points/change_percent 一律轉成絕對值，
+    # 避免不同資料來源（TWSE 的漲跌點數不帶號、漲跌百分比帶號；Yahoo 兩者都帶號）
+    # 混用時在畫面上出現 "--0.02%" 這種重複負號。
     return {
         "name": quote.name,
         "close": quote.close,
         "change_sign": quote.change_sign,
-        "change_points": quote.change_points,
-        "change_percent": quote.change_percent,
+        "change_points": abs(quote.change_points),
+        "change_percent": abs(quote.change_percent),
         "trend": _trend(quote),
     }
 
