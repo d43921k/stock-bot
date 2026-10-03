@@ -163,6 +163,7 @@
   }
   .stock-item .stock-name { font-weight: 700; font-size: 14px; }
   .stock-item .stock-ticker { color: var(--muted); font-size: 12px; margin-left: 4px; }
+  .stock-item .stock-close { font-size: 12px; color: var(--muted); white-space: nowrap; }
   .stock-item .price-row {
     display: flex;
     gap: 16px;
@@ -199,6 +200,7 @@
   <div class="stock-item{% if breakout %} breakout{% endif %}">
     <div class="stock-head">
       <span><span class="stock-name">{{ pick.name }}</span><span class="stock-ticker">{{ pick.ticker }}</span></span>
+      {% if pick.close is not none %}<span class="stock-close">收盤 {{ "%.2f"|format(pick.close) }}</span>{% endif %}
     </div>
     <div class="price-row">
       <span>進場區間：<b>{{ pick.entry_range }}</b></span>

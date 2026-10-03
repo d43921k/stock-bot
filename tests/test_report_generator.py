@@ -46,17 +46,17 @@ ANALYSIS = {
     "news_conclusion": "新聞總結測試內容",
     "stock_picks": {
         "short_term": [
-            {"ticker": "2330", "name": "台積電", "entry_range": "950-960", "stop_loss": "930", "reason": "短線理由"}
+            {"ticker": "2330", "name": "台積電", "entry_range": "950-960", "stop_loss": "930", "reason": "短線理由", "close": 2510.0}
         ],
         "mid_term": [
-            {"ticker": "2317", "name": "鴻海", "entry_range": "200-205", "stop_loss": "190", "reason": "中線理由"}
+            {"ticker": "2317", "name": "鴻海", "entry_range": "200-205", "stop_loss": "190", "reason": "中線理由", "close": 254.0}
         ],
         "long_term": [
-            {"ticker": "2454", "name": "聯發科", "entry_range": "1300-1320", "stop_loss": "1250", "reason": "長線理由"}
+            {"ticker": "2454", "name": "聯發科", "entry_range": "1300-1320", "stop_loss": "1250", "reason": "長線理由", "close": None}
         ],
     },
     "breakout_picks": [
-        {"ticker": "6999", "name": "小飆股", "entry_range": "20-22", "stop_loss": "18", "reason": "爆發股理由"}
+        {"ticker": "6999", "name": "小飆股", "entry_range": "20-22", "stop_loss": "18", "reason": "爆發股理由", "close": 22.0}
     ],
 }
 
@@ -95,6 +95,25 @@ def test_generate_report_writes_mobile_friendly_html(tmp_path):
     assert "小飆股" in html  # 爆發股
     assert "2026-10-02" in html  # 標題用產生當天日期
     assert "資料日期：2026-10-01" in html  # 資料實際日期（前一交易日收盤）
+    assert "收盤 2510.00" in html  # 台積電收盤價
+    assert "收盤 22.00" in html  # 爆發股收盤價
+
+
+def test_generate_report_handles_unknown_close_price_gracefully(tmp_path):
+    """找不到收盤價（close 為 None）時不應該顯示，也不能讓產生報告失敗。"""
+    output_path = tmp_path / "index.html"
+
+    result_path = generate_report(
+        tw_indices=TW_INDICES,
+        us_indices=US_INDICES,
+        sectors=SECTORS,
+        news=NEWS,
+        analysis=ANALYSIS,
+        output_path=str(output_path),
+    )
+
+    html = result_path.read_text(encoding="utf-8")
+    assert "聯發科" in html
 
 
 def test_generate_report_creates_parent_dirs(tmp_path):
